@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "770781364855",
+    "firebase_url": "https://ganonalabs.firebaseio.com",
+    "project_id": "ganonalabs",
+    "storage_bucket": "ganonalabs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770781364855:android:bd46439730598849",
+        "android_client_info": {
+          "package_name": "com.ganonalabs.munir.electrtech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770781364855-sjo72jo32q7ce8k2pijtfn960kd3kev6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ganonalabs.munir.electrtech",
+            "certificate_hash": "da86c227cbdf608e88a111803a7f0af5fed28bfa"
+          }
+        },
+        {
+          "client_id": "770781364855-v21t79cqenp57bn6ui2mcl5ea868oa78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWYb4kCT3Bne5hzGg8BxoEfgKUVNSyquY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770781364855-v21t79cqenp57bn6ui2mcl5ea868oa78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
