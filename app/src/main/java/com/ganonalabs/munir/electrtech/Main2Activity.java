@@ -1,8 +1,10 @@
 package com.ganonalabs.munir.electrtech;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,6 +26,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,31 +35,62 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.ganonalabs.munir.electrtech.data.model.TokenClass;
+import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
+import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
+import com.ganonalabs.munir.electrtech.model.AppUser;
 import com.ganonalabs.munir.electrtech.model.Services;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
+import com.google.android.gms.auth.TokenData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Map;
+
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Main2Activity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    public static String USERDATA = "";
     private TextView mTextMessage;
-    private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    public ImageView imguser;
+    private FirebaseUser user;// = FirebaseAuth.getInstance().getCurrentUser();
     private ArrayList<Object> userData, userProviders;
     //private Query query;
     //private FirebaseDatabase firebaseDatabase;
     public RecyclerView mainlayoutrecycler;
     public RecyclerView.LayoutManager lm;
+    public AppUser appUser;
+    public TextView txtusername,txtuseremail,txtuserphone;
+    public Button btneditprofile;
+    public DatabaseReference serviceDB = FirebaseDatabase.getInstance()
+            .getReference()
+            .child("services");
+    private DatabaseReference dbUserRef = FirebaseDatabase.getInstance()
+            .getReference()
+            .child("users");
+
+    private TokenDataApiService tokenDataAPIService = TokenDataApiUtils.getUserDataAPIServices();
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -78,19 +115,17 @@ public class Main2Activity extends BaseActivity
         }
     };
 
-    private Query query = FirebaseDatabase.getInstance()
-            .getReference()
-                .child("services")
-                .orderByChild("service_id")
-                .limitToLast(50);
+    private Query query = serviceDB
+            .orderByChild("service_id")
+            .limitToLast(50);
 
     FirebaseRecyclerOptions<Services> options = new FirebaseRecyclerOptions.Builder<Services>()
-                                                    .setQuery(query,Services.class).build();
+            .setQuery(query,Services.class).build();
 
 
     public FirebaseRecyclerAdapter main_adapter = new FirebaseRecyclerAdapter<Services,ServicesHolder>(options) {
         @Override
-         protected void onBindViewHolder(@NonNull ServicesHolder holder, int position, @NonNull Services model) {
+        protected void onBindViewHolder(@NonNull ServicesHolder holder, int position, @NonNull Services model) {
             holder.service_text.setText(model.getService_text());
             holder.service_tex.setText(model.getService_tex());
             holder.service_hidden_id.setText(model.getService_id());
@@ -116,16 +151,44 @@ public class Main2Activity extends BaseActivity
         }
     };
 
+
+
+    public ValueEventListener profileListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                appUser = postSnapshot.getValue(AppUser.class);
+                if(appUser!=null) {
+                    updateUI(appUser);
+                }
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+    // dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //showProgressDialog("Loading Data", getApplicationContext());
+        dbUserRef= FirebaseDatabase.getInstance()
+                .getReference().child("users");
+        serviceDB.keepSynced(true);
+        dbUserRef.keepSynced(true);
+
+
 
         mTextMessage = (TextView) findViewById(R.id.message);
         mainlayoutrecycler = findViewById(R.id.mainlayoutrecycler);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         lm = new GridLayoutManager(getApplicationContext(),2);
@@ -148,11 +211,23 @@ public class Main2Activity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        txtuseremail = hView.findViewById(R.id.txtuseremail);
+        txtusername = hView.findViewById(R.id.txtusername);
+        txtuserphone = hView.findViewById(R.id.txtuserphone);
+        imguser = hView.findViewById(R.id.imguser);
+        btneditprofile = hView.findViewById(R.id.btneditprofile);
+
+        //dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
+
+
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             startActivity(new Intent(this, LoginActivity.class));
         } else {
@@ -180,8 +255,9 @@ public class Main2Activity extends BaseActivity
     protected void onResume() {
         super.onResume();
 
-
-
+        if(user != null) {
+            dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
+        }
         mainlayoutrecycler.setLayoutManager(lm);
         mainlayoutrecycler.setItemAnimator(new DefaultItemAnimator());
         //mainlayoutrecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -189,16 +265,23 @@ public class Main2Activity extends BaseActivity
         //mainlayoutrecycler.startListening();
         main_adapter.notifyDataSetChanged();
         mainlayoutrecycler.setAdapter(main_adapter);
+        //getToken("password", "2", "tHCzyYG6Iv67kVW4mJObOWuKCO0KqfhxzFYEe5DC",
+        //   "shofin.cse@gmail.com", "123456");
+
+        //sendData();
+        // postJob();
+
 
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 
@@ -266,4 +349,148 @@ public class Main2Activity extends BaseActivity
         super.onStop();
         main_adapter.stopListening();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(dbUserRef != null){
+            dbUserRef.removeEventListener(profileListener);
+        }
+    }
+
+    public void updateUI(AppUser appUser){
+        if(appUser!=null) {
+            if(appUser.getPhotoURL()!= null) {
+                Picasso.with(this)
+                        .load(appUser.getPhotoURL())
+                        .fit()
+                        .into(imguser);
+            }
+            txtusername.setText(appUser.getName());
+            txtuserphone.setText(appUser.getPhoneNumber());
+            txtuseremail.setText(appUser.getEmail());
+            btneditprofile.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void editProfile(View view){
+        // Intent i  = new Intent(this, UserProfileActivity.class);
+        // i.putExtra("USERDATA",appUser);
+        // startActivity(i);
+    }
+
+
+//    private void getToken(String grant_type, String client_id,
+//                          String client_secret, String username,
+//                          String password){
+//        tokenDataAPIService.sendOauthdata(grant_type, client_id,
+//                client_secret, username,
+//                password).enqueue(new Callback<TokenClass>() {
+//            @Override
+//            public void onResponse(Call<TokenClass> call, Response<TokenClass> response) {
+//                String m =response.raw().request().url().toString();
+//                if(response.isSuccessful()){
+//                    //String m =response.raw().request().url().toString();
+//                    if (response.body() != null){
+//
+//                        Toast.makeText(getApplicationContext(), "Successfull", Toast.LENGTH_SHORT).show();
+//                        // Toast.makeText(getApplicationContext(), response.body()., Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                    else {
+//                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Sorry for inconvince server is down", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<TokenClass> call, Throwable t) {
+//
+//            }
+//        });
+//
+//    }
+
+//    public void sendData(){
+//        Map<String, Object> jsonParams = new ArrayMap<>();
+////put something inside the map, could be null
+//        jsonParams.put("grant_type", "password");
+//        jsonParams.put("client_id", "2");
+//        jsonParams.put("client_secret", "tHCzyYG6Iv67kVW4mJObOWuKCO0KqfhxzFYEe5DC");
+//        jsonParams.put("username", "shofin.cse@gmail.com");
+//        jsonParams.put("password", "123456");
+//
+//        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+////serviceCaller is the interface initialized with retrofit.create...
+//        Call<ResponseBody> response = tokenDataAPIService.sendToken(body);
+//
+//        response.enqueue(new Callback<ResponseBody>()
+//        {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> rawResponse)
+//            {
+//                try
+//                {
+//                    //get your response....
+//                    Log.d("NSIT", "RetroFit2.0 :RetroGetLogin: " + rawResponse.body().string());
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable throwable)
+//            {
+//                // other stuff...
+//            }
+//        });
+//
+//
+//    }
+
+
+
+//
+//    public void postJob(){
+//        Map<String, Object> jsonParams = new ArrayMap<>();
+////put something inside the map, could be null
+//        jsonParams.put("ServiceItem", "AC Servicing");
+//        jsonParams.put("Description", "Not Cooling");
+//        jsonParams.put("DeviceQty", "1");
+//        jsonParams.put("Brand", "1");
+//        jsonParams.put("Phone", "123456");
+//        jsonParams.put("Address", "Gulshan");
+//
+//        RequestBody body = RequestBody.create(okhttp3.MediaType.
+//                parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+////serviceCaller is the interface initialized with retrofit.create...
+//        Call<ResponseBody> response = tokenDataAPIService.postJob(body);
+//
+//        response.enqueue(new Callback<ResponseBody>()
+//        {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> rawResponse)
+//            {
+//                try
+//                {
+//                    //get your response....
+//                    Log.d("NSIT", "JOB POST: " + rawResponse.body().string());
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable throwable)
+//            {
+//                // other stuff...
+//            }
+//        });
+//    }
 }
