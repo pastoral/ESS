@@ -39,6 +39,10 @@
         <activity
             android:name=".ui.JobSchedulingActivity"
             android:label="@string/title_activity_job_scheduling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.JobPostingActivity"
+            android:label="@string/title_activity_job_posting"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

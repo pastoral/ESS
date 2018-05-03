@@ -148,4 +148,23 @@ public class BaseActivity extends AppCompatActivity {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
+    public void noConnectionSnack(boolean isConnected , ViewGroup viewGroup){
+        String message="";
+        int color = Color.WHITE;
+        if(!isConnected){
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+        }
+//        else{
+//            message = "Good! Connected to Internet";
+//            color = Color.WHITE;
+//        }
+        Snackbar snackbar = Snackbar.make(viewGroup, message, Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView)sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+
 }

@@ -6,42 +6,34 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.ArrayMap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.ganonalabs.munir.electrtech.data.model.TokenClass;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
 import com.ganonalabs.munir.electrtech.model.AppUser;
 import com.ganonalabs.munir.electrtech.model.Services;
+import com.ganonalabs.munir.electrtech.utils.RecyclerTouchListener;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
-import com.google.android.gms.auth.TokenData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,16 +47,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Map;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Main2Activity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -82,6 +65,9 @@ public class Main2Activity extends BaseActivity
     public AppUser appUser;
     public TextView txtusername,txtuseremail,txtuserphone;
     public Button btneditprofile;
+    public CoordinatorLayout main2_coord;
+
+
     public DatabaseReference serviceDB = FirebaseDatabase.getInstance()
             .getReference()
             .child("services");
@@ -188,6 +174,7 @@ public class Main2Activity extends BaseActivity
 
         mTextMessage = (TextView) findViewById(R.id.message);
         mainlayoutrecycler = findViewById(R.id.mainlayoutrecycler);
+        main2_coord = findViewById(R.id.main2_coord);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -217,6 +204,7 @@ public class Main2Activity extends BaseActivity
         txtuserphone = hView.findViewById(R.id.txtuserphone);
         imguser = hView.findViewById(R.id.imguser);
         btneditprofile = hView.findViewById(R.id.btneditprofile);
+
 
         //dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
 
@@ -263,6 +251,7 @@ public class Main2Activity extends BaseActivity
         //mainlayoutrecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         //mainlayoutrecycler.notifyDataSetChanged();
         //mainlayoutrecycler.startListening();
+         mainlayoutrecycler.addOnItemTouchListener(new RecyclerTouchListener.OnItemClickListener());
         main_adapter.notifyDataSetChanged();
         mainlayoutrecycler.setAdapter(main_adapter);
         //getToken("password", "2", "tHCzyYG6Iv67kVW4mJObOWuKCO0KqfhxzFYEe5DC",
