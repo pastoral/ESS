@@ -32,6 +32,8 @@ import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
 import com.ganonalabs.munir.electrtech.model.AppUser;
 import com.ganonalabs.munir.electrtech.model.Services;
+import com.ganonalabs.munir.electrtech.ui.JobPostingActivity;
+import com.ganonalabs.munir.electrtech.ui.JobSchedulingActivity;
 import com.ganonalabs.munir.electrtech.utils.RecyclerTouchListener;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -66,6 +68,7 @@ public class Main2Activity extends BaseActivity
     public TextView txtusername,txtuseremail,txtuserphone;
     public Button btneditprofile;
     public CoordinatorLayout main2_coord;
+    private Intent intent;
 
 
     public DatabaseReference serviceDB = FirebaseDatabase.getInstance()
@@ -251,7 +254,18 @@ public class Main2Activity extends BaseActivity
         //mainlayoutrecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         //mainlayoutrecycler.notifyDataSetChanged();
         //mainlayoutrecycler.startListening();
-         mainlayoutrecycler.addOnItemTouchListener(new RecyclerTouchListener.OnItemClickListener());
+         mainlayoutrecycler.addOnItemTouchListener(new RecyclerTouchListener(this, new RecyclerTouchListener.OnItemClickListener() {
+             @Override
+             public void onItemClick(View view, int position) {
+                 if(haveNetworkConnection()){
+                    intent = new Intent(getApplicationContext(), JobPostingActivity.class);
+                    startActivity(intent);
+                 }
+                 else{
+                     noConnectionSnack(false,main2_coord);
+                 }
+             }
+         }));
         main_adapter.notifyDataSetChanged();
         mainlayoutrecycler.setAdapter(main_adapter);
         //getToken("password", "2", "tHCzyYG6Iv67kVW4mJObOWuKCO0KqfhxzFYEe5DC",
