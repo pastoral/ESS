@@ -8,10 +8,14 @@ public class Services {
     public String service_text;
     public String tag;
     public String base_price;
+    public String description;
+    public String header_image;
+    public String includes;
+    public String warranty;
 
     public Services(){}
 
-    public Services(String service_id, String name, String imageUrl, String service_tex, String service_text, String tag, String base_price) {
+    public Services(String service_id, String name, String imageUrl, String service_tex, String service_text, String tag, String base_price, String description, String header_image, String includes, String warranty) {
         this.service_id = service_id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -19,6 +23,10 @@ public class Services {
         this.service_text = service_text;
         this.tag = tag;
         this.base_price = base_price;
+        this.description = description;
+        this.header_image = header_image;
+        this.includes = includes;
+        this.warranty = warranty;
     }
 
     public String getService_id() {
@@ -75,5 +83,37 @@ public class Services {
 
     public void setBase_price(String base_price) {
         this.base_price = base_price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getHeader_image() {
+        return header_image;
+    }
+
+    public void setHeader_image(String header_image) {
+        this.header_image = header_image;
+    }
+
+    public String getIncludes() {
+        return includes;
+    }
+
+    public void setIncludes(String includes) {
+        this.includes = includes;
+    }
+
+    public String getWarranty() {
+        return warranty;
+    }
+
+    public void setWarranty(String warranty) {
+        this.warranty = warranty;
     }
 }

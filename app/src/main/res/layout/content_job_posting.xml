@@ -8,4 +8,131 @@
     tools:context="com.ganonalabs.munir.electrtech.ui.JobPostingActivity"
     tools:showIn="@layout/activity_job_posting">
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="30dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/linear_job_holder"
+            android:orientation="vertical"
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/warranty_color_bak"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_job_header"
+                        android:text="Warranty"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_warranty"
+                        android:id="@+id/warranty_text"
+                        android:text="3 months"
+                        android:textStyle="italic"/>
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingRight="5dp"
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_job_header"
+                        android:layout_gravity="right"
+                        android:text="Base Price"
+                        android:paddingRight="10dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_warranty"
+                        android:id="@+id/price_text"
+                        android:layout_gravity="right"
+                        android:text="1000 BDT"
+                        android:paddingRight="10dp"
+                        android:textStyle="italic"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19sp"
+                android:id="@+id/service_name"
+                android:text="AC Servicing"
+                android:layout_gravity="center"
+                android:paddingTop="5dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/service_description"
+                android:text="Bold, graphic, intentional.\n\n
+                The foundational elements of print based design typography, grids, space, scale, color,
+            and use of imagery guide visual treatments. These elements do far more than please the
+            eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge
+            imagery, large scale typography, and intentional white space create a bold and graphic
+            interface that immerse the user in the experience.\n
+            An emphasis on user actions makes core functionality immediately apparent and provides
+            waypoints for the user.\n\n"
+                android:textSize="@dimen/text_size_job"
+                android:paddingTop="3dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Includes"
+                android:paddingTop="5dp"
+                android:paddingLeft="3dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/service_includes"
+                android:text="Good Service \n good Service"
+                android:textSize="@dimen/text_size_job"
+                android:paddingTop="3dp"
+                android:paddingBottom="6dp"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
 </android.support.constraint.ConstraintLayout>

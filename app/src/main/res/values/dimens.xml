@@ -7,4 +7,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="text_size_warranty">14sp</dimen>
+    <dimen name="text_size_job">12sp</dimen>
+    <dimen name="text_size_job_header">17sp</dimen>
 </resources>

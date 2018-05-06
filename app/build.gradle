@@ -51,7 +51,7 @@ dependencies {
     //implementation 'com.facebook.android:facebook-login:4.29.0'
     // never change this
     implementation('com.facebook.android:facebook-android-sdk:4.25.0') // never change this
-
+    implementation 'com.michaelmuenzer.android:ScrollableNumberPicker:0.2.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

@@ -30,10 +30,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
+import com.ganonalabs.munir.electrtech.interfaces.ItemClickListner;
 import com.ganonalabs.munir.electrtech.model.AppUser;
 import com.ganonalabs.munir.electrtech.model.Services;
 import com.ganonalabs.munir.electrtech.ui.JobPostingActivity;
-import com.ganonalabs.munir.electrtech.ui.JobSchedulingActivity;
+
 import com.ganonalabs.munir.electrtech.utils.RecyclerTouchListener;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,6 +70,8 @@ public class Main2Activity extends BaseActivity
     public Button btneditprofile;
     public CoordinatorLayout main2_coord;
     private Intent intent;
+    public Services services = new Services();
+    private String name, phone,email,address;
 
 
     public DatabaseReference serviceDB = FirebaseDatabase.getInstance()
@@ -119,12 +122,44 @@ public class Main2Activity extends BaseActivity
             holder.service_tex.setText(model.getService_tex());
             holder.service_hidden_id.setText(model.getService_id());
             Picasso.with(getApplicationContext()).load(model.getImageUrl()).into(holder.service_image);
+//            holder.itemView.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v) {
+//                    if(haveNetworkConnection()){
+//                        intent = new Intent(getApplicationContext(), JobPostingActivity.class);
+//                        // intent.putExtra("name", main_adapter.getItem(position).)
+//                        getApplicationContext().startActivity(intent);
+//                    }
+//                    else{
+//                        noConnectionSnack(false,main2_coord);
+//                    }
+//                }
+//            });
+
+//            holder.setItemClickListner(new ItemClickListner() {
+//                @Override
+//                public void onClick(View view, int position, boolean isLongPressed) {
+//                    if(haveNetworkConnection()){
+//                        intent = new Intent(getApplicationContext(), JobPostingActivity.class);
+//                        // intent.putExtra("name", main_adapter.getItem(position).)
+//                        startActivity(intent);
+//                    }
+//                    else{
+//                        noConnectionSnack(false,main2_coord);
+//                    }
+//                }
+//
+//            });
+
+
         }
 
         @Override
         public ServicesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_recycler_items,parent,false);
+
             return new ServicesHolder(view);
+
         }
 
         @Override
@@ -148,6 +183,7 @@ public class Main2Activity extends BaseActivity
             for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                 appUser = postSnapshot.getValue(AppUser.class);
                 if(appUser!=null) {
+
                     updateUI(appUser);
                 }
             }
@@ -236,7 +272,7 @@ public class Main2Activity extends BaseActivity
                     userProviders.add(profile);
                 }
                 String provider = user.getProviders().get(0);
-                String temp = "" ;
+
             }
         }
         main_adapter.startListening();
@@ -250,16 +286,38 @@ public class Main2Activity extends BaseActivity
             dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
         }
         mainlayoutrecycler.setLayoutManager(lm);
-        mainlayoutrecycler.setItemAnimator(new DefaultItemAnimator());
+        mainlayoutrecycler.setItemAnimator(null);
+        //mainlayoutrecycler.setItemAnimator(new DefaultItemAnimator());
         //mainlayoutrecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         //mainlayoutrecycler.notifyDataSetChanged();
         //mainlayoutrecycler.startListening();
+
          mainlayoutrecycler.addOnItemTouchListener(new RecyclerTouchListener(this, new RecyclerTouchListener.OnItemClickListener() {
              @Override
              public void onItemClick(View view, int position) {
                  if(haveNetworkConnection()){
                     intent = new Intent(getApplicationContext(), JobPostingActivity.class);
-                    startActivity(intent);
+                    //intent.putExtra("name", )
+                     services = (Services) main_adapter.getItem(position);
+                     intent.putExtra("service_id", services.getService_id());
+                     intent.putExtra("name", services.getName());
+                     intent.putExtra("imageUrl", services.getImageUrl());
+                     intent.putExtra("service_tex", services.getService_tex());
+                     intent.putExtra("service_text", services.getService_text());
+                     intent.putExtra("tag", services.getTag());
+                     intent.putExtra("base_price", services.getBase_price());
+                     intent.putExtra("description", services.getDescription());
+                     intent.putExtra("header_image", services.getHeader_image());
+                     intent.putExtra("includes", services.getIncludes());
+                     intent.putExtra("warranty", services.getWarranty());
+                     if(appUser != null){
+                         intent.putExtra("username", appUser.getName());
+                         intent.putExtra("address", appUser.getAddress());
+                         intent.putExtra("email", appUser.getEmail());
+                         intent.putExtra("phone", appUser.getPhoneNumber());
+                         intent.putExtra("uid", appUser.getUid());
+                     }
+                     startActivity(intent);
                  }
                  else{
                      noConnectionSnack(false,main2_coord);
