@@ -142,6 +142,14 @@
             android:minWidth="100dp"
             android:minHeight="40dp"
             android:background="@drawable/number_picker_bg_color"
+            app:snp_buttonBackgroundTintSelector="@color/white"
+            app:snp_buttonTouchScaleFactor="0.8"
+            app:snp_orientation="horizontal"
+            app:snp_valueMarginEnd="5dp"
+            app:snp_valueMarginStart="5dp"
+            app:snp_value_text_color="@color/colorPrimary"
+            app:snp_value_text_size="16sp"
+            app:snp_value_text_appearance="?android:attr/textAppearanceMedium"
            />
 
         <Button
