@@ -113,6 +113,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_job_posting">JobPostingActivity</string>
+    <string name="title_activity_job_forwarding">JobForwardingActivity</string>
 
 
 </resources>

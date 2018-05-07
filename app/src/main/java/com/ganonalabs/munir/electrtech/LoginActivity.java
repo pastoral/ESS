@@ -1,13 +1,17 @@
 package com.ganonalabs.munir.electrtech;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -117,8 +121,44 @@ public class LoginActivity extends AppCompatActivity {
                     // AppUser pressed back button
                     Snackbar.make(relativeLayout,"Signin Cancelled", Snackbar.LENGTH_SHORT);
                 }
+                if (response!= null && response.getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    Snackbar.make(relativeLayout,"No Internet Connection", Snackbar.LENGTH_SHORT);
+                    Log.d("Login Info" , "No Internet Connection");
+                    new MaterialDialog.Builder(this)
+                            .title("Login failed")
+                            .content("No Internet Connection")
+                            .neutralText("Close")
+                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    finish();
+                                }
+                            })
+                            .show();
+
+
+                    return;
+                }
                 if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
                     Snackbar.make(relativeLayout,"No Internet Connection", Snackbar.LENGTH_SHORT);
+                    return;
+                }
+                if (response==null || response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                    Snackbar.make(relativeLayout,"Unknown Error", Snackbar.LENGTH_SHORT);
+                    Log.d("Login Info" , "Unknown Error");
+
+                    new MaterialDialog.Builder(this)
+                            .title("Login failed")
+                            .content("Unknown error occurred")
+                            .neutralText("Close")
+                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    finish();
+                                }
+                            })
+                            .show();
+
                     return;
                 }
 

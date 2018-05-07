@@ -43,9 +43,11 @@
         <activity
             android:name=".ui.JobPostingActivity"
             android:label="@string/title_activity_job_posting"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.JobForwardingActivity"
+            android:label="@string/title_activity_job_forwarding"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

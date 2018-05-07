@@ -10,4 +10,7 @@
     <dimen name="text_size_warranty">14sp</dimen>
     <dimen name="text_size_job">12sp</dimen>
     <dimen name="text_size_job_header">17sp</dimen>
+    <dimen name="job_form_label_size">14sp</dimen>
+    <dimen name="job_form_text_size">13sp</dimen>
+    <dimen name="job_form_spacing">8dp</dimen>
 </resources>
