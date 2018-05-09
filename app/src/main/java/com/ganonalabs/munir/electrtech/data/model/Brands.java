@@ -35,4 +35,6 @@ public class Brands {
     public void setData(List<Brands_Data> data) {
         this.data = data;
     }
+
 }
+

@@ -219,20 +219,15 @@
                     android:textSize="@dimen/job_form_label_size"
                     android:padding="@dimen/job_form_spacing"
                     />
-                <EditText
+                <Spinner
+                    android:id="@+id/spinner"
                     android:layout_weight="1"
-                    android:id="@+id/service_brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="#05ab9a"
+                    android:minHeight="29dp"
+                    android:minWidth="39dp"/>
 
-                    android:textColorHint="#181737"
-                    android:textColor="#181737"
-                    android:maxLength="100"
-                    android:background="#0000"
-                    android:gravity="right"
-                    android:textSize="@dimen/job_form_text_size"
-                    android:padding="@dimen/job_form_spacing"
-                    />
             </LinearLayout>
             <View
                 android:layout_width="match_parent"

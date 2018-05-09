@@ -102,19 +102,13 @@ public class LoginActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             // Successfully signed in
             if(resultCode== ResultCodes.OK){
-                if(firebaseUser.getProviders().get(0).contains("phone")){
-                    startActivity(new Intent(this,PhoneVerificationActivity.class)
-                            .putExtra("my_token", "phone"));
-                }
-                else {
-                    IdpResponse idpResponse = IdpResponse.fromResultIntent(data);
-
-                    startActivity(new Intent(this, MainActivity.class)
-                            .putExtra("my_token", idpResponse.getIdpToken()));
-                    finish();
-                }
+                IdpResponse idpResponse = IdpResponse.fromResultIntent(data);
+                startActivity(new Intent(this,Main2Activity.class)
+                        .putExtra("my_token", idpResponse.getIdpToken()));
+                finish();
                 return;
-            }
+                }
+
             else{
                 // Sign in failed
                 if(response==null){

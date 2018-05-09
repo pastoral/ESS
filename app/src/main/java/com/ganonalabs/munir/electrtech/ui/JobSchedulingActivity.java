@@ -4,16 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
+
 import android.support.design.widget.Snackbar;
-import android.support.v4.util.ArrayMap;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import android.util.ArrayMap;
 import android.util.Log;
-import android.util.Size;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -24,26 +26,32 @@ import com.ganonalabs.munir.electrtech.data.model.Brands;
 import com.ganonalabs.munir.electrtech.data.model.Brands_Data;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
-import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPickerListener;
-import com.squareup.picasso.Picasso;
 
+
+import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
+
+
+import com.squareup.picasso.Picasso;
+import com.weiwangcn.betterspinner.library.BetterSpinner;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.net.NetworkInterface;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.transform.Result;
-
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.Query;
+import android.view.ViewGroup.LayoutParams;
+
+
 
 public class JobSchedulingActivity extends BaseActivity {
 
@@ -58,7 +66,12 @@ public class JobSchedulingActivity extends BaseActivity {
     private TextView schedule_service_name;
     private TokenDataApiService tokenDataAPIService = TokenDataApiUtils.getUserDataAPIServices();
   // private List<Brands> data = new ArrayList<>();
-   private Brands brands = new Brands();
+   private List<Brands_Data> brands_data;
+    private static final String[] COUNTRIES = new String[] {
+            "Belgium", "France", "Italy", "Germany", "Spain"
+    };
+    public Spinner textView;
+    public  ArrayAdapter<Brands_Data> adapter;
 
 
 
@@ -98,7 +111,7 @@ public class JobSchedulingActivity extends BaseActivity {
         user_email = findViewById(R.id.user_email);
         user_phone = findViewById(R.id.user_phone);
         user_address = findViewById(R.id.user_address);
-        service_brand = findViewById(R.id.service_brand);
+        //service_brand = findViewById(R.id.service_brand);
         capacity = findViewById(R.id.capacity);
         problem_description = findViewById(R.id.problem_description);
         service_quantiy = findViewById(R.id.service_quantiy);
@@ -113,6 +126,16 @@ public class JobSchedulingActivity extends BaseActivity {
             problem_description.setHorizontallyScrolling(false);
             problem_description.setLines(3);
         }
+    textView = findViewById(R.id.spinner);
+        getBrandInfo();
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,brands_data);
+        if(brands_data!=null && brands_data.size()>0) {
+            adapter = new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,brands_data);
+                    //(this,
+            //                    android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+
+            textView.setAdapter(adapter);
+        }
 
 
     }
@@ -120,7 +143,8 @@ public class JobSchedulingActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        brand = service_brand.getText().toString();
+
+       // brand = service_brand.getText().toString();
         capacities = capacity.getText().toString();
         problem = problem_description.getText().toString();
         qty = service_quantiy.getText().toString();
@@ -135,7 +159,7 @@ public class JobSchedulingActivity extends BaseActivity {
         user_address.setText(address);
         schedule_service_name.setText(name);
 
-        getBrandInfo();
+
 
 
 
@@ -145,6 +169,7 @@ public class JobSchedulingActivity extends BaseActivity {
 //                quantiy = value;
 //            }
 //        });
+
     }
 
     public void loadJobScheduling(View view) {
@@ -271,42 +296,44 @@ public class JobSchedulingActivity extends BaseActivity {
 
 
     public void getBrandInfo(){
-        Map<String, Object> jsonParams = new ArrayMap<>();
-////put something inside the map, could be null
+                Map<String, Object> jsonParams = new ArrayMap<>();
+//put something inside the map, could be null
 
 
-        RequestBody body = RequestBody.create(okhttp3.MediaType.
-                parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+       // RequestBody body = RequestBody.create(okhttp3.MediaType.
+          //      parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
 //serviceCaller is the interface initialized with retrofit.create...
-        Call<ResponseBody> response = tokenDataAPIService.getBrands();
+        Call<List<Brands_Data>> response = tokenDataAPIService.getBrands();
+        String name = response.toString();
 
-        response.enqueue(new Callback<ResponseBody>()
+        response.enqueue(new Callback<List<Brands_Data>>()
         {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> rawResponse)
+            public void onResponse(Call<List<Brands_Data>> call, Response<List<Brands_Data>> rawResponse)
             {
                 try
                 {
-                    String m = rawResponse.body().string();
+                    brands_data = rawResponse.body();
+                    adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,brands_data);
+                    textView.setAdapter(adapter);
                     //get your response....
-                   // Log.d("NSIT", "JOB POST: " + rawResponse.body().string());
-                    Type listType = new TypeToken<List<Size>>() {}.getType();
-                    List<Size> yourList = new Gson().fromJson(m, listType);
-                    Log.d("onResponse", yourList.toString());
-
+                    Log.d("NSIT", "JOB POST: " + brands_data.toString());
                 }
                 catch (Exception e)
                 {
+                    Log.d("NSIT", "JOB POST: " + "Failed");
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable)
+            public void onFailure(Call<List<Brands_Data>> call, Throwable throwable)
             {
                 // other stuff...
             }
         });
+
+
     }
 
 }

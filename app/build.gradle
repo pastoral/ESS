@@ -53,6 +53,7 @@ dependencies {
     implementation('com.facebook.android:facebook-android-sdk:4.25.0') // never change this
     implementation 'com.michaelmuenzer.android:ScrollableNumberPicker:0.2.2'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.weiwangcn.betterspinner:library:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
