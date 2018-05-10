@@ -226,7 +226,10 @@
                     android:layout_height="wrap_content"
                     android:textColorHint="#05ab9a"
                     android:minHeight="29dp"
-                    android:minWidth="39dp"/>
+                    android:spinnerMode="dropdown"
+                    android:minWidth="39dp"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:padding="@dimen/job_form_spacing"/>
 
             </LinearLayout>
             <View

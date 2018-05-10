@@ -8,10 +8,79 @@
     tools:context="com.ganonalabs.munir.electrtech.ui.JobForwardingActivity"
     tools:showIn="@layout/activity_job_forwarding">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="19dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:id="@+id/fwd_service_name"
+            android:text="AC Servicing"
+            android:layout_gravity="center"
+            android:paddingTop="3dp"
+            android:paddingBottom="9dp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:id="@+id/linear_fwd"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="5"
+            android:paddingTop="5dp"
+            android:layout_alignParentBottom="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select Date"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="12"
+                    android:background="#0000"
+                    android:gravity="left"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/job_form_label_size"
+                    android:padding="@dimen/job_form_spacing"
+                    />
+                <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:id="@+id/fwdCalendarView"
+                    android:background="#0000"
+                    android:gravity="right"
+                    android:textColorHint="#181737"
+                    android:textColor="#181737"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:padding="@dimen/job_form_spacing"
+                    app:primaryColor="@color/google_red"
+                    app:textColor="@android:color/white"
+                    app:selectedItem_textColor="@color/google_red"
+                    app:todayItem_textColor="@android:color/white"
+                    app:todayItem_background="@drawable/circle_white_stroke_background"
+                    app:selectedItem_background="@drawable/circle_white_solid_background"
+                    app:buttonLeft_drawableTintColor="@android:color/white"
+                    app:buttonRight_drawableTintColor="@android:color/white"
+                    app:expandIconColor="@color/backgroundcolor">
+                </com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
