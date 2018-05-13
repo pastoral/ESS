@@ -142,7 +142,9 @@ public class JobSchedulingActivity extends BaseActivity {
         }
     textView = findViewById(R.id.spinner);
 
-
+        if( header_image != null && !header_image.isEmpty()){
+            Picasso.with(getApplicationContext()).load(header_image).into(jobschedulingimageview);
+        }
 
     }
 
@@ -151,13 +153,9 @@ public class JobSchedulingActivity extends BaseActivity {
         super.onResume();
         getBrandInfo();
        // brand = service_brand.getText().toString();
-        capacities = capacity.getText().toString();
-        problem = problem_description.getText().toString();
-        qty = service_quantiy.getText().toString();
 
-        if( header_image != null && !header_image.isEmpty()){
-            Picasso.with(getApplicationContext()).load(header_image).into(jobschedulingimageview);
-        }
+
+
 
         user_name.setText(username);
         user_phone.setText(phone);
@@ -275,6 +273,10 @@ public class JobSchedulingActivity extends BaseActivity {
                 qty = service_quantiy.getText().toString();
             }
 
+            capacities = capacity.getText().toString();
+            problem = problem_description.getText().toString();
+            qty = service_quantiy.getText().toString();
+
             if (qty.length() > 0 && brand_id != 0 && address.length() > 0 && phone.length() > 6 && username.length() > 0) {
                 intent = new Intent(getApplicationContext(), JobForwardingActivity.class);
                 intent.putExtra("service_id", service_id);
@@ -289,7 +291,7 @@ public class JobSchedulingActivity extends BaseActivity {
                 intent.putExtra("includes", includes);
                 intent.putExtra("warranty", warranty);
                 intent.putExtra("username", username);
-                intent.putExtra("address", username);
+                intent.putExtra("address", address);
                 intent.putExtra("email", email);
                 intent.putExtra("phone", phone);
                 intent.putExtra("uid", uid);
@@ -304,7 +306,7 @@ public class JobSchedulingActivity extends BaseActivity {
 
                 }
                 else{
-                    showSnack(coord_job_schedule,"Please input those empty fields");
+                    showSnack(coord_job_schedule,"Please fill those empty fields");
                 }
             }
             else {
@@ -352,6 +354,10 @@ public class JobSchedulingActivity extends BaseActivity {
                 // other stuff...
             }
         });
+    }
+
+    public void loadJobEdit(View view){
+        intent = new Intent(getApplicationContext(),3)
     }
 
 

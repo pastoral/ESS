@@ -91,9 +91,9 @@ public class JobPostingActivity extends BaseActivity {
         phone = intent.getStringExtra("phone");
         uid = intent.getStringExtra("uid");
 
-       if( header_image != null && !header_image.isEmpty()){
-           Picasso.with(getApplicationContext()).load(header_image).into(jobpostingimageview);
-       }
+        if( header_image != null && !header_image.isEmpty()){
+            Picasso.with(getApplicationContext()).load(header_image).into(jobpostingimageview);
+        }
 
     }
 

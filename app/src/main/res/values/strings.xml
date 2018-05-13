@@ -114,6 +114,7 @@
     </string>
     <string name="title_activity_job_posting">JobPostingActivity</string>
     <string name="title_activity_job_forwarding">JobForwardingActivity</string>
+    <string name="title_activity_job_final">JobFinalActivity</string>
 
 
 </resources>
