@@ -92,7 +92,7 @@
                     android:background="#43A047"
                     android:textColor="#ffffff"
                     android:onClick="loadJobFinalization"
-                    android:text="Schedule my service"/>
+                    android:text="Confirm My service"/>
         </LinearLayout>
 
 

@@ -64,6 +64,7 @@ import android.widget.Toast;
 public class JobSchedulingActivity extends BaseActivity {
 
     private String service_id, name, imageUrl, service_tex, service_text, tag, base_price, description, header_image, includes, warranty, username, email, address, phone, uid, brand_name, capacities, problem, qty;
+
     private int brand_id = 0;
     public ImageView jobschedulingimageview;
     public ScrollableNumberPicker number_picker_horizontal;
@@ -162,6 +163,16 @@ public class JobSchedulingActivity extends BaseActivity {
         user_email.setText(email);
         user_address.setText(address);
         schedule_service_name.setText(name);
+
+        if(bundle.getString("capacities") != null && !bundle.getString("capacities").isEmpty()){
+            capacity.setText( intent.getStringExtra("capacities"));
+        }
+        if(bundle.getString("problem") != null && !bundle.getString("problem").isEmpty()){
+            problem_description.setText( intent.getStringExtra("problem"));
+        }
+        if(bundle.getString("qty") != null && !bundle.getString("qty").isEmpty()){
+            service_quantiy.setText( intent.getStringExtra("qty"));
+        }
 
 
 //        if(brands_data!=null && brands_data.size()>0 && adapter != null) {
@@ -279,6 +290,7 @@ public class JobSchedulingActivity extends BaseActivity {
 
             if (qty.length() > 0 && brand_id != 0 && address.length() > 0 && phone.length() > 6 && username.length() > 0) {
                 intent = new Intent(getApplicationContext(), JobForwardingActivity.class);
+
                 intent.putExtra("service_id", service_id);
                 intent.putExtra("name", name);
                 intent.putExtra("imageUrl", imageUrl);
@@ -356,9 +368,7 @@ public class JobSchedulingActivity extends BaseActivity {
         });
     }
 
-    public void loadJobEdit(View view){
-        intent = new Intent(getApplicationContext(),3)
-    }
+
 
 
 

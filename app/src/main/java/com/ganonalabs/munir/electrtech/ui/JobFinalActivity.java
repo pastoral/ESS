@@ -110,4 +110,37 @@ public class JobFinalActivity extends BaseActivity {
             noConnectionSnack(false, coord_job_final);
         }
     }
+    public void loadJobEdit(View view){
+        intent = new Intent(getApplicationContext(),JobSchedulingActivity.class);
+
+        intent.putExtra("service_id", service_id);
+        intent.putExtra("name", name);
+        intent.putExtra("imageUrl", imageUrl);
+        intent.putExtra("service_tex", service_tex);
+        intent.putExtra("service_text", service_text);
+        intent.putExtra("tag", tag);
+        intent.putExtra("base_price", base_price);
+        intent.putExtra("description", description);
+        intent.putExtra("header_image", header_image);
+        intent.putExtra("includes", includes);
+        intent.putExtra("warranty", warranty);
+        intent.putExtra("username", username);
+        intent.putExtra("address", address);
+        intent.putExtra("email", email);
+        intent.putExtra("phone", phone);
+        intent.putExtra("uid", uid);
+
+        intent.putExtra("brand_id", String.valueOf(brand_id));
+        intent.putExtra("brand_name", brand_name);
+        intent.putExtra("capacities", capacities);
+        intent.putExtra("problem", problem);
+        intent.putExtra("qty", qty);
+
+        intent.putExtra("service_time", service_time);
+        intent.putExtra("service_date", service_date);
+        intent.putExtra("payment_method", payment_method);
+
+        startActivity(intent);
+
+    }
 }

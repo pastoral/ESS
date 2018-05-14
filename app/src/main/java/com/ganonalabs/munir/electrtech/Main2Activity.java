@@ -201,6 +201,8 @@ public class Main2Activity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //showProgressDialog("Loading Data", getApplicationContext());

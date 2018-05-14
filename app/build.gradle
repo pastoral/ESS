@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.8.1'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -13,6 +27,12 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
+
+        manifestPlaceholders = [
+                onesignal_app_id: "16c649be-56ef-4476-b002-0081205ef8a9",
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: "REMOTE"
+        ]
     }
     buildTypes {
         release {
@@ -55,6 +75,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.weiwangcn.betterspinner:library:1.1.0'
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.0'
+    implementation 'com.onesignal:OneSignal:[3.8.3, 3.99.99]'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -68,7 +89,7 @@ configurations.all {
         def requested = details.requested
         if (requested.group == 'com.android.support') {
             if (!requested.name.startsWith("multidex")) {
-                details.useVersion '27.0.0'
+                details.useVersion '27.1.1'
             }
         }
     }
