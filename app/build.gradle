@@ -76,6 +76,7 @@ dependencies {
     implementation 'com.weiwangcn.betterspinner:library:1.1.0'
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.0'
     implementation 'com.onesignal:OneSignal:[3.8.3, 3.99.99]'
+    implementation 'com.github.baoyachi:StepView:1.9'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

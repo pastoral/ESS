@@ -35,6 +35,7 @@ import com.ganonalabs.munir.electrtech.model.AppUser;
 import com.ganonalabs.munir.electrtech.model.Services;
 import com.ganonalabs.munir.electrtech.ui.JobPostingActivity;
 
+import com.ganonalabs.munir.electrtech.ui.OrderHistoryListActivity;
 import com.ganonalabs.munir.electrtech.utils.RecyclerTouchListener;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -376,8 +377,10 @@ public class Main2Activity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_history) {
             // Handle the camera action
+            intent = new Intent(getApplicationContext(), OrderHistoryListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

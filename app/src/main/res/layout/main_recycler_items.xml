@@ -25,7 +25,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/home_applinaces"
                 android:id="@+id/service_image"
-                android:padding="10dp"/>
+                android:padding="3dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

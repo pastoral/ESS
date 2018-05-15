@@ -37,9 +37,7 @@
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.UserProfileActivity" />
         <activity
             android:name=".ui.JobSchedulingActivity"
@@ -56,7 +54,25 @@
         <activity
             android:name=".ui.JobFinalActivity"
             android:label="@string/title_activity_job_final"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.OrderDetailActivity"
+            android:label="@string/title_activity_order_detail"
+            android:parentActivityName=".Main2Activity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ganonalabs.munir.electrtech.Main2Activity" />
+        </activity>
+        <activity
+            android:name=".ui.OrderHistoryListActivity"
+            android:label="@string/title_activity_order_history_list"
+            android:parentActivityName=".Main2Activity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ganonalabs.munir.electrtech.Main2Activity" />
+        </activity>
     </application>
 
 </manifest>
