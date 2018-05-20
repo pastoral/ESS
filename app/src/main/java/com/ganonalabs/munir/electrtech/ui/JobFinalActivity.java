@@ -2,18 +2,40 @@ package com.ganonalabs.munir.electrtech.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ganonalabs.munir.electrtech.BaseActivity;
 import com.ganonalabs.munir.electrtech.R;
+import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
+import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
+import com.jpardogo.android.googleprogressbar.library.ChromeFloatingCirclesDrawable;
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
+import com.jpardogo.android.googleprogressbar.library.NexusRotationCrossDrawable;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+
+import java.util.Map;
+
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class JobFinalActivity extends BaseActivity {
 
@@ -26,6 +48,9 @@ public class JobFinalActivity extends BaseActivity {
             final_service_time, final_payment_method, final_user_name;
     private ImageView jobfinalimageview;
     private int brand_id = 0;
+    private TokenDataApiService tokenDataAPIService = TokenDataApiUtils.getUserDataAPIServices();
+    private ProgressBar mProgressbar;
+    private LinearLayout linlaHeaderProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +74,8 @@ public class JobFinalActivity extends BaseActivity {
         final_service_time = findViewById(R.id.final_service_time);
         final_payment_method = findViewById(R.id.final_payment_method);
         jobfinalimageview = findViewById(R.id.jobfinalimageview);
+        mProgressbar = findViewById(R.id.final_progressbar);
+        linlaHeaderProgress = findViewById(R.id.linlaHeaderProgress);
 
         intent = getIntent();
         bundle = intent.getExtras();
@@ -104,6 +131,9 @@ public class JobFinalActivity extends BaseActivity {
     public void loadJobFinalization(View view){
 
         if(haveNetworkConnection()){
+           // Toast.makeText(getApplicationContext(),"Clicked", Toast.LENGTH_SHORT).show();
+
+            postJob();
 
         }
         else{
@@ -142,5 +172,68 @@ public class JobFinalActivity extends BaseActivity {
 
         startActivity(intent);
 
+    }
+
+
+        public void postJob(){
+      // linlaHeaderProgress.setVisibility(View.VISIBLE);
+                Map<String, Object> jsonParams = new ArrayMap<>();
+//put something inside the map, could be null
+        jsonParams.put("ServiceItem", name);
+        jsonParams.put("Description", problem);
+        jsonParams.put("DeviceQty", qty);
+        jsonParams.put("Brand", brand_id);
+        jsonParams.put("Phone", phone);
+        jsonParams.put("Address", address);
+            jsonParams.put("Name", username);
+            jsonParams.put("Email", email);
+            jsonParams.put("Capacity", capacities);
+            jsonParams.put("ExpectedDate", service_date);
+            jsonParams.put("ExpectedTime", service_time);
+            jsonParams.put("ReqCreatedBy", uid);
+            jsonParams.put("PaymentMethod", 1);
+
+
+        RequestBody body = RequestBody.create(okhttp3.MediaType.
+                parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+//serviceCaller is the interface initialized with retrofit.create...
+        Call<ResponseBody> response = tokenDataAPIService.postJob(body);
+
+        response.enqueue(new Callback<ResponseBody>()
+        {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> rawResponse)
+            {
+                try
+                {
+                    //get your response....
+                    Log.d("NSIT", "JOB POST: " + rawResponse.body().string());
+
+
+                    linlaHeaderProgress.setVisibility(View.GONE);
+                    new MaterialDialog.Builder(getApplicationContext())
+                            .title("Order posted successfully")
+                            .backgroundColor(getResources().getColor(R.color.com_facebook_blue))
+                            .neutralText("Close")
+                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    finish();
+                                }
+                            })
+                            .show();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable)
+            {
+                // other stuff...
+            }
+        });
     }
 }

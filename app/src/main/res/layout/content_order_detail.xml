@@ -35,8 +35,8 @@
                     android:maxLength="30"
                     android:background="#0000"
                     android:gravity="left"
-                    android:textSize="@dimen/job_form_label_size"
-                    android:padding="@dimen/job_form_spacing"
+                    android:textSize="@dimen/order_details_text_size"
+                    android:padding="@dimen/order_details_spacing"
                     />
             </LinearLayout>
             <LinearLayout
@@ -53,8 +53,8 @@
                     android:maxLength="30"
                     android:background="#0000"
                     android:gravity="left"
-                    android:textSize="@dimen/job_form_label_size"
-                    android:padding="@dimen/job_form_spacing"
+                    android:textSize="@dimen/order_details_text_size"
+                    android:padding="@dimen/order_details_spacing"
                     />
                 <TextView
                     android:layout_weight="1"
@@ -69,9 +69,13 @@
                     android:gravity="left"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:padding="@dimen/job_form_spacing"
+                    android:padding="@dimen/order_details_spacing"
                     />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,11 +84,11 @@
 
                 <ImageView
                     android:id="@+id/order_image"
-                    android:layout_width="64dp"
-                    android:layout_height="90dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:padding="@dimen/job_form_spacing"
+                    android:padding="@dimen/order_details_spacing"
                     android:src="@drawable/home_applinaces" />
                 <TextView
                     android:layout_weight="2"
@@ -98,23 +102,153 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:textStyle="bold"
-                    android:textSize="@dimen/job_form_label_size"
-                    android:padding="@dimen/job_form_spacing"
+                    android:textSize="@dimen/order_details_text_size"
+                    android:padding="@dimen/order_details_spacing"
                     />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
 
-                <com.baoyachi.stepview.HorizontalStepView
+                <com.baoyachi.stepview.VerticalStepView
                     android:id="@+id/step_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:textSize="@dimen/order_details_text_size"
+                    android:padding="@dimen/order_details_spacing"
                     />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Service man"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="30"
+                    android:background="#0000"
+                    android:gravity="left"
+                    android:textSize="10sp"
+                    android:padding="1dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/service_man_image"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:padding="@dimen/order_details_spacing"
+                    android:src="@drawable/ic_person_black" />
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/service_man_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="David Husk"
+                    android:gravity="center_vertical"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="30"
+                    android:background="#0000"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:padding="@dimen/job_form_spacing"
+                    />
+
+                <ImageView
+                    android:id="@+id/service_man_phone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center|right"
+                    android:padding="@dimen/order_details_spacing"
+                    android:src="@drawable/ic_phone" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Details"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="30"
+                    android:background="#0000"
+                    android:gravity="left"
+                    android:textSize="10sp"
+                    android:padding="1dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bill"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="30"
+                    android:background="#0000"
+                    android:gravity="left"
+                    android:textSize="@dimen/order_details_text_size"
+                    android:padding="@dimen/order_details_spacing"
+                    />
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/txtbills"
+                    android:text="1000 BDT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="#181737"
+                    android:textColor="#181737"
+                    android:maxLength="30"
+                    android:background="#0000"
+                    android:gravity="left"
+                    android:textSize="12sp"
+                    android:padding="@dimen/order_details_spacing"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
+
+
         </LinearLayout>
     </LinearLayout>
 

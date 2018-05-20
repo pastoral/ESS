@@ -13,4 +13,11 @@
     <dimen name="job_form_label_size">14sp</dimen>
     <dimen name="job_form_text_size">13sp</dimen>
     <dimen name="job_form_spacing">8dp</dimen>
+    <dimen name="order_details_text_size">11sp</dimen>
+    <dimen name="order_item_date_text_size">15sp</dimen>
+    <dimen name="order_details_spacing">1dp</dimen>
+    <dimen name="order_item_spacing">2dp</dimen>
+
+    <dimen name="order_item_others_text_size">1sp</dimen>
+
 </resources>
