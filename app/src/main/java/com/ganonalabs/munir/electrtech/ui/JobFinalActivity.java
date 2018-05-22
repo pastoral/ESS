@@ -20,22 +20,29 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ganonalabs.munir.electrtech.BaseActivity;
+import com.ganonalabs.munir.electrtech.Main2Activity;
 import com.ganonalabs.munir.electrtech.R;
+import com.ganonalabs.munir.electrtech.data.model.JobPostResponse;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
 import com.jpardogo.android.googleprogressbar.library.ChromeFloatingCirclesDrawable;
 import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.jpardogo.android.googleprogressbar.library.NexusRotationCrossDrawable;
+
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import java.util.Map;
 
+
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.ganonalabs.munir.electrtech.Main2Activity.main2_coord;
 
 public class JobFinalActivity extends BaseActivity {
 
@@ -48,9 +55,12 @@ public class JobFinalActivity extends BaseActivity {
             final_service_time, final_payment_method, final_user_name;
     private ImageView jobfinalimageview;
     private int brand_id = 0;
+    private int quantity = 1;
+    private int capacity = 1;
     private TokenDataApiService tokenDataAPIService = TokenDataApiUtils.getUserDataAPIServices();
     private ProgressBar mProgressbar;
     private LinearLayout linlaHeaderProgress;
+    private String OrderID = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +110,15 @@ public class JobFinalActivity extends BaseActivity {
         brand_name = intent.getStringExtra("brand_name");
         brand_id = Integer.parseInt(intent.getStringExtra("brand_id"));
         capacities = intent.getStringExtra("capacities");
+        if(capacities!=null || !capacities.isEmpty() || !capacities.contains("")) {
+            capacity = Integer.parseInt(intent.getStringExtra("capacities"));
+        }
+        else{
+            capacity = 1;
+        }
         problem = intent.getStringExtra("problem");
         qty = intent.getStringExtra("qty");
+        quantity = Integer.parseInt(intent.getStringExtra("qty"));
 
         service_time = intent.getStringExtra("service_time");
         service_date = intent.getStringExtra("service_date");
@@ -133,7 +150,8 @@ public class JobFinalActivity extends BaseActivity {
         if(haveNetworkConnection()){
            // Toast.makeText(getApplicationContext(),"Clicked", Toast.LENGTH_SHORT).show();
 
-            postJob();
+            //postJob();
+            showFinalDialog();
 
         }
         else{
@@ -176,64 +194,95 @@ public class JobFinalActivity extends BaseActivity {
 
 
         public void postJob(){
-      // linlaHeaderProgress.setVisibility(View.VISIBLE);
+       linlaHeaderProgress.setVisibility(View.VISIBLE);
                 Map<String, Object> jsonParams = new ArrayMap<>();
 //put something inside the map, could be null
         jsonParams.put("ServiceItem", name);
         jsonParams.put("Description", problem);
-        jsonParams.put("DeviceQty", qty);
+        jsonParams.put("DeviceQty", quantity);
         jsonParams.put("Brand", brand_id);
         jsonParams.put("Phone", phone);
         jsonParams.put("Address", address);
             jsonParams.put("Name", username);
             jsonParams.put("Email", email);
-            jsonParams.put("Capacity", capacities);
+            jsonParams.put("Capacity", capacity);
             jsonParams.put("ExpectedDate", service_date);
             jsonParams.put("ExpectedTime", service_time);
             jsonParams.put("ReqCreatedBy", uid);
             jsonParams.put("PaymentMethod", 1);
 
+            jsonParams.put("ServiceItemId", Integer.valueOf(service_id));
+            jsonParams.put("ImageUrl",header_image);
+            jsonParams.put("RequestType",1);
+
+
 
         RequestBody body = RequestBody.create(okhttp3.MediaType.
                 parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
 //serviceCaller is the interface initialized with retrofit.create...
-        Call<ResponseBody> response = tokenDataAPIService.postJob(body);
+        Call<JobPostResponse> response = tokenDataAPIService.postJob(body);
 
-        response.enqueue(new Callback<ResponseBody>()
+        response.enqueue(new Callback<JobPostResponse>()
         {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> rawResponse)
+            public void onResponse(Call<JobPostResponse> call, retrofit2.Response<JobPostResponse> rawResponse)
             {
                 try
                 {
                     //get your response....
-                    Log.d("NSIT", "JOB POST: " + rawResponse.body().string());
+                  //  Log.d("NSIT", "JOB POST: " + rawResponse.body().toString());
+
+                    if(rawResponse.isSuccessful()){
+                        linlaHeaderProgress.setVisibility(View.GONE);
+                        OrderID = rawResponse.body().getOrderId();
 
 
-                    linlaHeaderProgress.setVisibility(View.GONE);
-                    new MaterialDialog.Builder(getApplicationContext())
-                            .title("Order posted successfully")
-                            .backgroundColor(getResources().getColor(R.color.com_facebook_blue))
-                            .neutralText("Close")
-                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    finish();
-                                }
-                            })
-                            .show();
+                    }
+
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
+                finally {
+                    linlaHeaderProgress.setVisibility(View.GONE);
+                }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable)
+            public void onFailure(Call<JobPostResponse> call, Throwable throwable)
             {
                 // other stuff...
+                linlaHeaderProgress.setVisibility(View.GONE);
             }
         });
+    }
+
+    public void showFinalDialog(){
+        new MaterialDialog.Builder(JobFinalActivity.this)
+                .title("Order posting")
+               // .iconRes(R.drawable.ess_logo)
+                .content("Do you want to proceed?")
+                .backgroundColor(getResources().getColor(R.color.com_facebook_blue))
+                .positiveText("Yes")
+                .negativeText("No")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        postJob();
+                        intent = new Intent(getApplicationContext(), Main2Activity.class);
+                        showSnack(main2_coord , "Order ID "+ OrderID+ " has been posted");
+                        startActivity(intent);
+
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+
+                .show();
     }
 }

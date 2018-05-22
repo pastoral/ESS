@@ -1,12 +1,14 @@
 package com.ganonalabs.munir.electrtech;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +55,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 
 public class Main2Activity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,10 +74,13 @@ public class Main2Activity extends BaseActivity
     public AppUser appUser;
     public TextView txtusername,txtuseremail,txtuserphone;
     public Button btneditprofile;
-    public CoordinatorLayout main2_coord;
+    public static CoordinatorLayout main2_coord;
     private Intent intent;
     public Services services = new Services();
     private String name, phone,email,address;
+    private LinearLayout main2_image_wrap;
+   public int[] androidColors ;
+   public CardView bankcardId;
 
 
     public DatabaseReference serviceDB = FirebaseDatabase.getInstance()
@@ -122,6 +130,8 @@ public class Main2Activity extends BaseActivity
             holder.service_text.setText(model.getService_text());
             holder.service_tex.setText(model.getService_tex());
             holder.service_hidden_id.setText(model.getService_id());
+            int color = androidColors[new Random().nextInt(androidColors.length)];
+            holder.main2_image_wrap.setBackgroundColor(color);
             Picasso.with(getApplicationContext()).load(model.getImageUrl()).into(holder.service_image);
 //            holder.itemView.setOnClickListener(new View.OnClickListener(){
 //                @Override
@@ -207,6 +217,10 @@ public class Main2Activity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //showProgressDialog("Loading Data", getApplicationContext());
+
+        main2_image_wrap = findViewById(R.id.main2_image_wrap);
+        bankcardId = findViewById(R.id.bankcardId);
+
         dbUserRef= FirebaseDatabase.getInstance()
                 .getReference().child("users");
         serviceDB.keepSynced(true);
@@ -217,6 +231,8 @@ public class Main2Activity extends BaseActivity
         mTextMessage = (TextView) findViewById(R.id.message);
         mainlayoutrecycler = findViewById(R.id.mainlayoutrecycler);
         main2_coord = findViewById(R.id.main2_coord);
+
+        androidColors = getResources().getIntArray(R.array.androidcolors);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

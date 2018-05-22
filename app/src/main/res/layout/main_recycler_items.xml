@@ -12,47 +12,56 @@
         android:id="@+id/bankcardId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="180dp"
         card_view:cardUseCompatPadding="true"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:id="@+id/main2_image_wrap"
             android:gravity="center">
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/home_applinaces"
-                android:id="@+id/service_image"
-                android:padding="3dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/home_applinaces"
+                    android:id="@+id/service_image"
+                    android:padding="3dp"/>
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:gravity="center"
+                android:textColor="#fffff8"
                 android:id="@+id/service_text"
                 android:layout_marginTop="5dp"
                 android:text="Home Appliances"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/deeppurple"
+                android:background="#000000"
                 android:layout_margin="3dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Get the home appliance services"
-                android:padding="4dp"
+                android:paddingTop="1dp"
                 android:id="@+id/service_tex"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="#ffffff"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="1"
-                android:padding="5dp"
                 android:id="@+id/service_hidden_id"
                 android:visibility="gone"
                 android:textColor="@android:color/darker_gray"/>
