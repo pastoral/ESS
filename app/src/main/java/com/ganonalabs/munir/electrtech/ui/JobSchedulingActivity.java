@@ -287,6 +287,7 @@ public class JobSchedulingActivity extends BaseActivity {
             capacities = capacity.getText().toString();
             problem = problem_description.getText().toString();
             qty = service_quantiy.getText().toString();
+            email = user_email.getText().toString();
 
             if (qty.length() > 0 && brand_id != 0 && address.length() > 0 && phone.length() > 6 && username.length() > 0) {
                 intent = new Intent(getApplicationContext(), JobForwardingActivity.class);

@@ -103,6 +103,9 @@ public class JobFinalActivity extends BaseActivity {
         warranty = intent.getStringExtra("warranty");
         username = intent.getStringExtra("username");
         email = intent.getStringExtra("email");
+        if(email==null || email.isEmpty()) {
+            email = ".";
+        }
         address = intent.getStringExtra("address");
         phone = intent.getStringExtra("phone");
         uid = intent.getStringExtra("uid");
@@ -117,6 +120,10 @@ public class JobFinalActivity extends BaseActivity {
             capacity = 1;
         }
         problem = intent.getStringExtra("problem");
+        if(problem==null || problem.isEmpty()) {
+            problem = ".";
+        }
+
         qty = intent.getStringExtra("qty");
         quantity = Integer.parseInt(intent.getStringExtra("qty"));
 

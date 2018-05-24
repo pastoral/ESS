@@ -306,6 +306,7 @@ public class Main2Activity extends BaseActivity
         }
         mainlayoutrecycler.setLayoutManager(lm);
         mainlayoutrecycler.setItemAnimator(null);
+
         //mainlayoutrecycler.setItemAnimator(new DefaultItemAnimator());
         //mainlayoutrecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         //mainlayoutrecycler.notifyDataSetChanged();

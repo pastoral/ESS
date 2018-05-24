@@ -10,23 +10,29 @@
     android:id="@+id/main2_constraint"
     android:background="#FAFAFA">
 
-    <LinearLayout
-        android:paddingTop="10dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
+        <android.support.v4.widget.NestedScrollView
             android:layout_height="match_parent"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:layout_width="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:fillViewport="true"
-            android:layout_marginBottom="55dp"
-            android:id="@+id/mainlayoutrecycler">
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+            >
+            <LinearLayout
+                android:paddingTop="5dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:fillViewport="true"
+                    android:layout_marginBottom="55dp"
+                    android:id="@+id/mainlayoutrecycler">
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
 
 </android.support.constraint.ConstraintLayout>
