@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.UserProfileActivity"
-    tools:showIn="@layout/activity_user_profile">
+    tools:context="ui.UserProfileActivity"
+    android:id="@+id/profileScroll"
+
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +24,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/linear"
+
                 >
 
                 <ImageView
@@ -108,16 +110,16 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_weight="3"
-            android:layout_alignParentBottom="true">
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
-                <aboutdevice.com.munir.symphony.mysymphony.customfonts.MyTextView
+                <com.ganonalabs.munir.electrtech.customfonts.MyTextView
                     android:layout_weight="2"
                     android:id="@+id/usrusr"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Name"
@@ -127,20 +129,20 @@
                     android:padding="16dp"
                     android:gravity="left"
                     />
-                <aboutdevice.com.munir.symphony.mysymphony.customfonts.MyTextView
-                    android:layout_weight="1"
+
+                <com.ganonalabs.munir.electrtech.customfonts.MyTextView
                     android:id="@+id/userName"
-                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=""
-                    android:textColorHint="#181737"
-                    android:textColor="#181737"
-                    android:maxLength="30"
+                    android:layout_weight="1"
                     android:background="#0000"
-                    android:padding="16dp"
                     android:gravity="right"
-                    />
+                    android:hint=""
+                    android:maxLength="30"
+                    android:padding="16dp"
+                    android:textColor="#181737"
+                    android:textColorHint="#181737"
+                    android:textSize="16sp" />
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -152,10 +154,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
-                <aboutdevice.com.munir.symphony.mysymphony.customfonts.MyTextView
+                <com.ganonalabs.munir.electrtech.customfonts.MyTextView
                     android:layout_weight="2"
                     android:id="@+id/mail"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Email"
@@ -164,10 +166,10 @@
                     android:background="#0000"
                     android:padding="16dp"
                     android:gravity="left"/>
-                <aboutdevice.com.munir.symphony.mysymphony.customfonts.MyTextView
+                <com.ganonalabs.munir.electrtech.customfonts.MyTextView
                     android:layout_weight="1"
                     android:id="@+id/userEmail"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="#1b193b"
@@ -190,10 +192,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
-                <aboutdevice.com.munir.symphony.mysymphony.customfonts.MyTextView
+                <com.ganonalabs.munir.electrtech.customfonts.MyTextView
                     android:layout_weight="2"
                     android:id="@+id/pswrd"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Phone"
@@ -203,10 +205,10 @@
                     android:padding="16dp"
                     android:gravity="left"
                     />
-                <aboutdevice.com.munir.symphony.mysymphony.customfonts.MyTextView
+                <com.ganonalabs.munir.electrtech.customfonts.MyTextView
                     android:layout_weight="1"
                     android:id="@+id/phoneNumber"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="#1b193b"
@@ -258,6 +260,44 @@
             <!--/>-->
             <!--</LinearLayout>-->
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <com.ganonalabs.munir.electrtech.customfonts.MyTextView
+                    android:layout_weight="2"
+
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="12"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:gravity="left"
+                    />
+                <com.ganonalabs.munir.electrtech.customfonts.MyTextView
+                    android:layout_weight="1"
+                    android:id="@+id/userAdress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="#0000"
+                    android:gravity="right"
+                    android:hint=""
+                    android:maxLength="100"
+                    android:padding="16dp"
+                    android:textColor="#181737"
+                    android:textColorHint="#181737"
+                    android:textSize="16sp"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
 
             <View
                 android:layout_width="match_parent"

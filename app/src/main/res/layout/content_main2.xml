@@ -10,7 +10,7 @@
     android:id="@+id/main2_constraint"
     android:background="#FAFAFA">
 
-
+   
 
         <android.support.v4.widget.NestedScrollView
             android:layout_height="match_parent"

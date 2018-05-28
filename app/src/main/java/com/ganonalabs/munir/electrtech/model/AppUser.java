@@ -1,14 +1,16 @@
 package com.ganonalabs.munir.electrtech.model;
 
 
+import android.os.Parcelable;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by munirul.hoque on 30/04/2018.
  */
 @SuppressWarnings("serial")
-
-public class AppUser {
+public class AppUser implements Serializable{
     public String uid;
     public String name;
     public String email;
@@ -134,4 +136,6 @@ public class AppUser {
     public void setAddress(String address) {
         this.address = address;
     }
+
+
 }

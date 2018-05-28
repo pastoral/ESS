@@ -51,7 +51,7 @@
         android:layout_gravity="right"
         android:textSize="9sp"
         style="?android:attr/borderlessButtonStyle"
-        android:onClick="editProfile"
+        android:onClick="editUserProfile"
         android:visibility="gone"
         />
 

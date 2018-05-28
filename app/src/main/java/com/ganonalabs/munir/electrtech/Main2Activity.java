@@ -39,6 +39,7 @@ import com.ganonalabs.munir.electrtech.model.Services;
 import com.ganonalabs.munir.electrtech.ui.JobPostingActivity;
 
 import com.ganonalabs.munir.electrtech.ui.OrderHistoryListActivity;
+import com.ganonalabs.munir.electrtech.ui.UserProfileActivity;
 import com.ganonalabs.munir.electrtech.utils.RecyclerTouchListener;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -81,6 +82,7 @@ public class Main2Activity extends BaseActivity
     private LinearLayout main2_image_wrap;
    public int[] androidColors ;
    public CardView bankcardId;
+
 
 
     public DatabaseReference serviceDB = FirebaseDatabase.getInstance()
@@ -576,4 +578,9 @@ public class Main2Activity extends BaseActivity
 //            }
 //        });
 //    }
+    public void editUserProfile(View view){
+        Intent i  = new Intent(getApplicationContext(), UserProfileActivity.class);
+        i.putExtra("USERDATA",appUser);
+        startActivity(i);
+    }
 }
