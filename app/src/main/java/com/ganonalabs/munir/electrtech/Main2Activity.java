@@ -12,6 +12,10 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,6 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +45,7 @@ import com.ganonalabs.munir.electrtech.model.Services;
 import com.ganonalabs.munir.electrtech.ui.JobPostingActivity;
 
 import com.ganonalabs.munir.electrtech.ui.OrderHistoryListActivity;
+import com.ganonalabs.munir.electrtech.ui.SearchActivity;
 import com.ganonalabs.munir.electrtech.ui.UserProfileActivity;
 import com.ganonalabs.munir.electrtech.utils.RecyclerTouchListener;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
@@ -56,11 +63,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
 public class Main2Activity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
 
     public static String USERDATA = "";
@@ -80,8 +88,14 @@ public class Main2Activity extends BaseActivity
     public Services services = new Services();
     private String name, phone,email,address;
     private LinearLayout main2_image_wrap;
+    private NavigationView navigationView;
    public int[] androidColors ;
    public CardView bankcardId;
+   public EditText mSearchField;
+    public ImageButton mSearchBtn;
+
+
+
 
 
 
@@ -118,7 +132,7 @@ public class Main2Activity extends BaseActivity
         }
     };
 
-    private Query query = serviceDB
+    public Query query = serviceDB
             .orderByChild("service_id")
             .limitToLast(50);
 
@@ -135,35 +149,6 @@ public class Main2Activity extends BaseActivity
             int color = androidColors[new Random().nextInt(androidColors.length)];
             holder.main2_image_wrap.setBackgroundColor(color);
             Picasso.with(getApplicationContext()).load(model.getImageUrl()).into(holder.service_image);
-//            holder.itemView.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v) {
-//                    if(haveNetworkConnection()){
-//                        intent = new Intent(getApplicationContext(), JobPostingActivity.class);
-//                        // intent.putExtra("name", main_adapter.getItem(position).)
-//                        getApplicationContext().startActivity(intent);
-//                    }
-//                    else{
-//                        noConnectionSnack(false,main2_coord);
-//                    }
-//                }
-//            });
-
-//            holder.setItemClickListner(new ItemClickListner() {
-//                @Override
-//                public void onClick(View view, int position, boolean isLongPressed) {
-//                    if(haveNetworkConnection()){
-//                        intent = new Intent(getApplicationContext(), JobPostingActivity.class);
-//                        // intent.putExtra("name", main_adapter.getItem(position).)
-//                        startActivity(intent);
-//                    }
-//                    else{
-//                        noConnectionSnack(false,main2_coord);
-//                    }
-//                }
-//
-//            });
-
 
         }
 
@@ -239,16 +224,7 @@ public class Main2Activity extends BaseActivity
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         lm = new GridLayoutManager(getApplicationContext(),2);
-        //lm.setOrientation(LinearLayoutManager.VERTICAL);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -256,7 +232,7 @@ public class Main2Activity extends BaseActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         txtuseremail = hView.findViewById(R.id.txtuseremail);
@@ -265,10 +241,24 @@ public class Main2Activity extends BaseActivity
         imguser = hView.findViewById(R.id.imguser);
         btneditprofile = hView.findViewById(R.id.btneditprofile);
 
+        mSearchField =  findViewById(R.id.search_field);
+        mSearchBtn =  findViewById(R.id.search_btn);
+
 
         //dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
+        mSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String searchText = mSearchField.getText().toString();
+                Intent i  = new Intent(getApplicationContext(), SearchActivity.class);
+                i.putExtra("USERDATA",appUser);
+                i.putExtra("searchText", searchText);
+                startActivity(i);
 
 
+            }
+        });
 
     }
 
@@ -583,4 +573,7 @@ public class Main2Activity extends BaseActivity
         i.putExtra("USERDATA",appUser);
         startActivity(i);
     }
+
+
+
 }

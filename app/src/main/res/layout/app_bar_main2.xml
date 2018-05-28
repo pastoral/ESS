@@ -12,16 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            app:layout_collapseMode = "pin"
-            android:gravity="bottom"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
-            android:layout_gravity="bottom"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                app:layout_collapseMode = "pin"
+                android:gravity="bottom"
+                app:titleTextAppearance="@style/Toolbar.TitleText"
+                android:layout_gravity="bottom"
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            </android.support.v7.widget.Toolbar>
+
+
+        </LinearLayout>
+
+
 
     </android.support.design.widget.AppBarLayout>
 

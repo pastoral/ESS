@@ -9,18 +9,12 @@ import android.widget.TextView;
 
 import com.ganonalabs.munir.electrtech.R;
 import com.ganonalabs.munir.electrtech.interfaces.ItemClickListner;
-import com.ganonalabs.munir.electrtech.model.AppUser;
 
-import java.util.Random;
-
-public class ServicesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    public TextView service_text, service_tex, service_hidden_id;
-    public ImageView service_image, mSearchBtn;
+public class SearchServiceHolder  extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public TextView name_text, status_text, search_service_hidden_id;
+    public ImageView profile_image;
     public ItemClickListner itemClickListner;
-    public LinearLayout main2_image_wrap;
-    public EditText mSearchField;
-    public AppUser appUser;
-    public int[] androidColors ;
+
 
 
 
@@ -34,16 +28,14 @@ public class ServicesHolder extends RecyclerView.ViewHolder implements View.OnCl
         this.itemClickListner = itemClickListner;
     }
 
-    public ServicesHolder(View view){
+    public SearchServiceHolder(View view){
         super(view);
         view.setOnClickListener(this);
         //view.setOnCreateContextMenuListener(this);
-        service_text = view.findViewById(R.id.service_text);
-        service_tex = view.findViewById(R.id.service_tex);
-        service_hidden_id = view.findViewById(R.id.service_hidden_id);
-        service_image = view.findViewById(R.id.service_image);
-        main2_image_wrap = view.findViewById(R.id.main2_image_wrap);
+        name_text = view.findViewById(R.id.name_text);
+        status_text = view.findViewById(R.id.status_text);
+        search_service_hidden_id = view.findViewById(R.id.search_service_hidden_id);
+        profile_image = view.findViewById(R.id.profile_image);
     }
-
 
 }

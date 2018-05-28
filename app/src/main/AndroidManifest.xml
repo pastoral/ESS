@@ -39,8 +39,7 @@
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.UserProfileActivity" />
         <activity
             android:name=".ui.JobSchedulingActivity"
@@ -76,6 +75,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ganonalabs.munir.electrtech.Main2Activity" />
         </activity>
+        <activity
+            android:name=".ui.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
