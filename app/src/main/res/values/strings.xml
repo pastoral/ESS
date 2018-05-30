@@ -129,4 +129,5 @@
 
     <string name="hint_phone_number"><i>0171000000</i></string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_news_list">NewsListActivity</string>
 </resources>
