@@ -8,10 +8,29 @@
     tools:context=".ui.OrderHistoryListActivity"
     tools:showIn="@layout/activity_order_history_list">
 
-   <Button
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Temp Load"
-       android:onClick="tempLoad"/>
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@+id/jobList_frame"
+       android:orientation="vertical"
+       android:layout_gravity="center"
+       app:layout_behavior="@string/appbar_scrolling_view_behavior"
+       >
+
+      <ProgressBar
+          style="?android:attr/progressBarStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/jobListProgressBar"
+          android:visibility="gone"
+          android:layout_gravity="center"/>
+
+      <android.support.v7.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/jobListRecycler"
+          android:scrollbars="vertical" />
+
+   </FrameLayout>
 
 </android.support.v4.widget.NestedScrollView>

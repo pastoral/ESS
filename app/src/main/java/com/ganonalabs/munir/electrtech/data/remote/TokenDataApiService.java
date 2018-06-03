@@ -19,6 +19,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 
 public interface TokenDataApiService {
@@ -55,7 +56,7 @@ public interface TokenDataApiService {
     @GET("api/Brands")
     Call<Brands> getBrands();
 
-    @GET("api/jobRequestByUser/{createdBy}")
-    Call<MyJobRequestList> getMyJobRequests();
+    @GET
+    Call<MyJobRequestList> getMyJobRequests(@Url String url);
 
 }

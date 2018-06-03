@@ -41,6 +41,9 @@ public class MyJobReqAdapter extends RecyclerView.Adapter<MyJobReqHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (myJobRequestList != null)
+            return myJobRequestList.size();
+        else
+            return 0;
     }
 }

@@ -389,6 +389,7 @@ public class Main2Activity extends BaseActivity
         if (id == R.id.nav_history) {
             // Handle the camera action
             intent = new Intent(getApplicationContext(), OrderHistoryListActivity.class);
+            intent.putExtra("uid",user.getUid());
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
