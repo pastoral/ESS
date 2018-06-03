@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ganonalabs.munir.electrtech.R;
+
 public class NewsHolder extends RecyclerView.ViewHolder {
     public TextView notification_title, notification_content, id_hiddenid;
     public ImageView icon_notification;

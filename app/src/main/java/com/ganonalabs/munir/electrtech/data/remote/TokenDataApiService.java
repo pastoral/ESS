@@ -3,6 +3,7 @@ package com.ganonalabs.munir.electrtech.data.remote;
 import com.ganonalabs.munir.electrtech.data.model.Brands;
 import com.ganonalabs.munir.electrtech.data.model.Brands_Data;
 import com.ganonalabs.munir.electrtech.data.model.JobPostResponse;
+import com.ganonalabs.munir.electrtech.data.model.JobRequests.MyJobRequestList;
 import com.ganonalabs.munir.electrtech.data.model.TokenClass;
 
 
@@ -53,5 +54,8 @@ public interface TokenDataApiService {
     })
     @GET("api/Brands")
     Call<Brands> getBrands();
+
+    @GET("api/jobRequestByUser/{createdBy}")
+    Call<MyJobRequestList> getMyJobRequests();
 
 }

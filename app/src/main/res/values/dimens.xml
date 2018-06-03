@@ -18,6 +18,6 @@
     <dimen name="order_details_spacing">1dp</dimen>
     <dimen name="order_item_spacing">2dp</dimen>
 
-    <dimen name="order_item_others_text_size">1sp</dimen>
+    <dimen name="order_item_others_text_size">12sp</dimen>
 
 </resources>

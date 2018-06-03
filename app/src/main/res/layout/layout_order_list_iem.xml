@@ -103,6 +103,11 @@
                         android:textSize="@dimen/order_item_others_text_size"
                         android:padding="@dimen/order_details_spacing"
                         />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobhiddenid"
+                        android:visibility="gone"/>
                 </LinearLayout>
             </LinearLayout>
 
