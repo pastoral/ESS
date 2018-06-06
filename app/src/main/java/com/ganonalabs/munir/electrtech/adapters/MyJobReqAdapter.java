@@ -32,7 +32,7 @@ public class MyJobReqAdapter extends RecyclerView.Adapter<MyJobReqHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyJobReqHolder holder, int position) {
-        holder.order_item_id.setText(myJobRequestList.get(position).getId());
+        holder.order_item_id.setText(myJobRequestList.get(position).getServiceId());
         holder.order_item_date.setText(myJobRequestList.get(position).getExpectedDate());
         holder.order_item_status.setText(myJobRequestList.get(position).getRequestStatus());
 

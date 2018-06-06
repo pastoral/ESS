@@ -10,12 +10,15 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardUseCompatPadding="true"
             android:padding="@dimen/order_item_spacing"
-            app:cardElevation="3dp">
+            card_view:cardUseCompatPadding="true"
+            android:background="#FFFFFF"
+            >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="1dp"
                 android:orientation="vertical">
                 <TextView
                     android:layout_weight="1"
@@ -109,6 +112,12 @@
                         android:id="@+id/jobhiddenid"
                         android:visibility="gone"/>
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorViewLine"
+
+                    />
             </LinearLayout>
 
         </android.support.v7.widget.CardView>

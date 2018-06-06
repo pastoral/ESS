@@ -68,6 +68,7 @@ public class OrderHistoryListActivity extends AppCompatActivity {
         jobListRecycler = findViewById(R.id.jobListRecycler);
         jobListProgressBar = findViewById(R.id.jobListProgressBar);
         jobListProgressBar.setVisibility(View.VISIBLE);
+        getMyJobRequestInfo();
 
 
     }
@@ -75,7 +76,11 @@ public class OrderHistoryListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getMyJobRequestInfo();
+
+
+        jobListRecycler.setLayoutManager(lm);
+        jobListRecycler.setItemAnimator(null);
+        jobListRecycler.hasFixedSize();
 
 
 
@@ -107,12 +112,13 @@ public class OrderHistoryListActivity extends AppCompatActivity {
                     Log.d("ESS_JOB ", data.toString());
                     if(data.size()>0){
                         myJobReqAdapter = new MyJobReqAdapter(data,mContext);
-                        jobListRecycler.setLayoutManager(lm);
-                        jobListRecycler.setItemAnimator(null);
                         jobListProgressBar.setVisibility(View.GONE);
-                        myJobReqAdapter.notifyDataSetChanged();
-                        jobListRecycler.setAdapter(myJobReqAdapter);
+
+
+
                     }
+                    myJobReqAdapter.notifyDataSetChanged();
+                    jobListRecycler.setAdapter(myJobReqAdapter);
 
 //                    brandName.add("Select Model");
 //                    for(int i = 0; i<data.size(); i++){
