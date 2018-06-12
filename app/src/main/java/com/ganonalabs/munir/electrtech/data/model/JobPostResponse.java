@@ -7,9 +7,9 @@ public class JobPostResponse {
     @SerializedName("0")
     @Expose
     private Integer _0;
-    @SerializedName("OrderId")
+    @SerializedName("ServiceId")
     @Expose
-    private String orderId;
+    private String serviceId;
 
     /**
      * No args constructor for use in serialization
@@ -20,13 +20,13 @@ public class JobPostResponse {
 
     /**
      *
+     * @param serviceId
      * @param _0
-     * @param orderId
      */
-    public JobPostResponse(Integer _0, String orderId) {
+    public JobPostResponse(Integer _0, String serviceId) {
         super();
         this._0 = _0;
-        this.orderId = orderId;
+        this.serviceId = serviceId;
     }
 
     public Integer get0() {
@@ -37,11 +37,11 @@ public class JobPostResponse {
         this._0 = _0;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getServiceId() {
+        return serviceId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 }

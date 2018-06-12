@@ -10,12 +10,18 @@ public class MyJobRequest {
     @SerializedName("serviceId")
     @Expose
     private String serviceId;
+    @SerializedName("jobAmount")
+    @Expose
+    private String jobAmount;
     @SerializedName("clientName")
     @Expose
     private String clientName;
     @SerializedName("clientPhone")
     @Expose
     private String clientPhone;
+    @SerializedName("address")
+    @Expose
+    private String address;
     @SerializedName("clientEmail")
     @Expose
     private String clientEmail;
@@ -33,19 +39,19 @@ public class MyJobRequest {
     private String expectedDate;
     @SerializedName("employeesName")
     @Expose
-    private Object employeesName;
+    private String employeesName;
     @SerializedName("group")
     @Expose
-    private Object group;
+    private String group;
     @SerializedName("expectedTime")
     @Expose
     private String expectedTime;
     @SerializedName("employeesPhone")
     @Expose
-    private Object employeesPhone;
+    private String employeesPhone;
     @SerializedName("TechnicalInput")
     @Expose
-    private Object technicalInput;
+    private String technicalInput;
     @SerializedName("requestStatus")
     @Expose
     private String requestStatus;
@@ -64,6 +70,7 @@ public class MyJobRequest {
      *
      * @param requestStatus
      * @param serviceItemId
+     * @param jobAmount
      * @param clientPhone
      * @param expectedTime
      * @param expectedDate
@@ -73,18 +80,21 @@ public class MyJobRequest {
      * @param problemDescription
      * @param employeesPhone
      * @param serviceId
+     * @param address
      * @param clientName
      * @param requestStatusDate
      * @param serviceItem
      * @param group
      * @param clientEmail
      */
-    public MyJobRequest(String id, String serviceId, String clientName, String clientPhone, String clientEmail, String serviceItem, String serviceItemId, String problemDescription, String expectedDate, Object employeesName, Object group, String expectedTime, Object employeesPhone, Object technicalInput, String requestStatus, String requestStatusDate) {
+    public MyJobRequest(String id, String serviceId, String jobAmount, String clientName, String clientPhone, String address, String clientEmail, String serviceItem, String serviceItemId, String problemDescription, String expectedDate, String employeesName, String group, String expectedTime, String employeesPhone, String technicalInput, String requestStatus, String requestStatusDate) {
         super();
         this.id = id;
         this.serviceId = serviceId;
+        this.jobAmount = jobAmount;
         this.clientName = clientName;
         this.clientPhone = clientPhone;
+        this.address = address;
         this.clientEmail = clientEmail;
         this.serviceItem = serviceItem;
         this.serviceItemId = serviceItemId;
@@ -115,6 +125,14 @@ public class MyJobRequest {
         this.serviceId = serviceId;
     }
 
+    public String getJobAmount() {
+        return jobAmount;
+    }
+
+    public void setJobAmount(String jobAmount) {
+        this.jobAmount = jobAmount;
+    }
+
     public String getClientName() {
         return clientName;
     }
@@ -129,6 +147,14 @@ public class MyJobRequest {
 
     public void setClientPhone(String clientPhone) {
         this.clientPhone = clientPhone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getClientEmail() {
@@ -171,19 +197,19 @@ public class MyJobRequest {
         this.expectedDate = expectedDate;
     }
 
-    public Object getEmployeesName() {
+    public String getEmployeesName() {
         return employeesName;
     }
 
-    public void setEmployeesName(Object employeesName) {
+    public void setEmployeesName(String employeesName) {
         this.employeesName = employeesName;
     }
 
-    public Object getGroup() {
+    public String getGroup() {
         return group;
     }
 
-    public void setGroup(Object group) {
+    public void setGroup(String group) {
         this.group = group;
     }
 
@@ -195,19 +221,19 @@ public class MyJobRequest {
         this.expectedTime = expectedTime;
     }
 
-    public Object getEmployeesPhone() {
+    public String getEmployeesPhone() {
         return employeesPhone;
     }
 
-    public void setEmployeesPhone(Object employeesPhone) {
+    public void setEmployeesPhone(String employeesPhone) {
         this.employeesPhone = employeesPhone;
     }
 
-    public Object getTechnicalInput() {
+    public String getTechnicalInput() {
         return technicalInput;
     }
 
-    public void setTechnicalInput(Object technicalInput) {
+    public void setTechnicalInput(String technicalInput) {
         this.technicalInput = technicalInput;
     }
 
@@ -226,5 +252,4 @@ public class MyJobRequest {
     public void setRequestStatusDate(String requestStatusDate) {
         this.requestStatusDate = requestStatusDate;
     }
-
 }

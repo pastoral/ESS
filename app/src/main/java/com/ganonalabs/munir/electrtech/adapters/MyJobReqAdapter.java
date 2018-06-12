@@ -35,6 +35,10 @@ public class MyJobReqAdapter extends RecyclerView.Adapter<MyJobReqHolder> {
         holder.order_item_id.setText(myJobRequestList.get(position).getServiceId());
         holder.order_item_date.setText(myJobRequestList.get(position).getExpectedDate());
         holder.order_item_status.setText(myJobRequestList.get(position).getRequestStatus());
+        holder.order_item_address.setText(myJobRequestList.get(position).getAddress());
+        holder.order_item_service_name.setText(myJobRequestList.get(position).getServiceItem());
+        holder.jobhiddenid.setText(myJobRequestList.get(position).getId());
+
 
        // Picasso.with(mContext).load(myJobRequestList.get(position).get).into(holder.service_image);
     }

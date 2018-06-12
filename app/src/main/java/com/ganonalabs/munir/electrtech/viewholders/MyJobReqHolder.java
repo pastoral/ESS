@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.ganonalabs.munir.electrtech.R;
 
 public class MyJobReqHolder extends RecyclerView.ViewHolder{
-    public TextView order_item_id,order_item_date,order_item_status,jobhiddenid,order_item_address;
+    public TextView order_item_id,order_item_date,order_item_status,jobhiddenid,order_item_address,order_item_service_name;
     public ImageView order_item_service_image;
     private LayoutInflater layoutInflater;
     private Context context;
@@ -20,6 +20,7 @@ public class MyJobReqHolder extends RecyclerView.ViewHolder{
         order_item_id = view.findViewById(R.id.order_item_id);
         order_item_date = view.findViewById(R.id.order_item_date);
         order_item_status = view.findViewById(R.id.order_item_status);
+        order_item_service_name = view.findViewById(R.id.order_item_service_name);
         jobhiddenid = view.findViewById(R.id.jobhiddenid);
         order_item_address = view.findViewById(R.id.order_item_address);
         order_item_service_image = view.findViewById(R.id.order_item_service_image);

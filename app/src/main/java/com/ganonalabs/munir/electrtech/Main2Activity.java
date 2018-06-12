@@ -78,7 +78,7 @@ public class Main2Activity extends BaseActivity
     private ArrayList<Object> userData, userProviders;
     //private Query query;
     //private FirebaseDatabase firebaseDatabase;
-    public RecyclerView mainlayoutrecycler;
+    public RecyclerView mainlayoutrecycler, recycler_carousel;
     public RecyclerView.LayoutManager lm;
     public AppUser appUser;
     public TextView txtusername,txtuseremail,txtuserphone;
@@ -218,6 +218,8 @@ public class Main2Activity extends BaseActivity
         mTextMessage = (TextView) findViewById(R.id.message);
         mainlayoutrecycler = findViewById(R.id.mainlayoutrecycler);
         main2_coord = findViewById(R.id.main2_coord);
+
+        recycler_carousel = findViewById(R.id.recycler_carousel);
 
         androidColors = getResources().getIntArray(R.array.androidcolors);
 

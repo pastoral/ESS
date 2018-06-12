@@ -13,7 +13,7 @@
        android:layout_height="match_parent"
        android:layout_below="@+id/jobList_frame"
        android:orientation="vertical"
-       android:layout_gravity="center"
+
        app:layout_behavior="@string/appbar_scrolling_view_behavior"
        >
 
@@ -28,7 +28,7 @@
       <android.support.v7.widget.RecyclerView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="65dp"
+          android:layout_marginTop="5dp"
           android:id="@+id/jobListRecycler"
           android:scrollbarAlwaysDrawVerticalTrack="true"
           android:fillViewport="true"

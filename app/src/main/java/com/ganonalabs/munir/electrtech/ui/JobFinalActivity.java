@@ -56,7 +56,7 @@ public class JobFinalActivity extends BaseActivity {
     private ImageView jobfinalimageview;
     private int brand_id = 0;
     private int quantity = 1;
-    private int capacity = 1;
+    private String capacity = "1";
     private TokenDataApiService tokenDataAPIService = TokenDataApiUtils.getUserDataAPIServices();
     private ProgressBar mProgressbar;
     private LinearLayout linlaHeaderProgress;
@@ -113,12 +113,12 @@ public class JobFinalActivity extends BaseActivity {
         brand_name = intent.getStringExtra("brand_name");
         brand_id = Integer.parseInt(intent.getStringExtra("brand_id"));
         capacities = intent.getStringExtra("capacities");
-        if(capacities!=null || !capacities.isEmpty() || !capacities.contains("")) {
-            capacity = Integer.parseInt(intent.getStringExtra("capacities"));
-        }
-        else{
-            capacity = 1;
-        }
+//        if(capacities!=null || !capacities.isEmpty() || !capacities.contains("")) {
+//            capacity = Integer.parseInt(intent.getStringExtra("capacities"));
+//        }
+//        else{
+//            capacity = 1;
+//        }
         problem = intent.getStringExtra("problem");
         if(problem==null || problem.isEmpty()) {
             problem = ".";
@@ -212,15 +212,15 @@ public class JobFinalActivity extends BaseActivity {
         jsonParams.put("Address", address);
             jsonParams.put("Name", username);
             jsonParams.put("Email", email);
-            jsonParams.put("Capacity", capacity);
+            jsonParams.put("Capacity", capacities );
             jsonParams.put("ExpectedDate", service_date);
             jsonParams.put("ExpectedTime", service_time);
             jsonParams.put("ReqCreatedBy", uid);
-            jsonParams.put("PaymentMethod", 1);
+            jsonParams.put("PaymentMethod", "1");
 
             jsonParams.put("ServiceItemId", Integer.valueOf(service_id));
             jsonParams.put("ImageUrl",header_image);
-            jsonParams.put("RequestType",1);
+            jsonParams.put("RequestType","1");
 
 
 
@@ -229,6 +229,7 @@ public class JobFinalActivity extends BaseActivity {
 //serviceCaller is the interface initialized with retrofit.create...
         Call<JobPostResponse> response = tokenDataAPIService.postJob(body);
 
+        Log.d("JOBREQUEST", jsonParams.toString());
         response.enqueue(new Callback<JobPostResponse>()
         {
             @Override
@@ -238,10 +239,11 @@ public class JobFinalActivity extends BaseActivity {
                 {
                     //get your response....
                   //  Log.d("NSIT", "JOB POST: " + rawResponse.body().toString());
-
+                    String requestedurl = rawResponse.raw().request().url().toString();
+                    Log.d("RQUESTED_URL", requestedurl);
                     if(rawResponse.isSuccessful()){
                         linlaHeaderProgress.setVisibility(View.GONE);
-                        OrderID = rawResponse.body().getOrderId();
+                        OrderID = rawResponse.body().getServiceId();
 
 
                     }
