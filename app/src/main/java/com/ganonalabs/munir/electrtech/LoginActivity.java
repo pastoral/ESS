@@ -85,8 +85,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
-                            .setLogo(R.drawable.ic_electrtech)
+                            .setLogo(R.drawable.ess_logo)
                             .setAvailableProviders(providers)
+                            .setTheme(R.style.LoginTheme)
                             .build(),
                     RC_SIGN_IN);
 

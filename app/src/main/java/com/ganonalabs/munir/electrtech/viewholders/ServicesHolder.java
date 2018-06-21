@@ -39,7 +39,7 @@ public class ServicesHolder extends RecyclerView.ViewHolder implements View.OnCl
         view.setOnClickListener(this);
         //view.setOnCreateContextMenuListener(this);
         service_text = view.findViewById(R.id.service_text);
-        service_tex = view.findViewById(R.id.service_tex);
+        //service_tex = view.findViewById(R.id.service_tex);
         service_hidden_id = view.findViewById(R.id.service_hidden_id);
         service_image = view.findViewById(R.id.service_image);
         main2_image_wrap = view.findViewById(R.id.main2_image_wrap);

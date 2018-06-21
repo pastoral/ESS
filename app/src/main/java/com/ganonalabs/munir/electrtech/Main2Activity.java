@@ -39,6 +39,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -72,6 +76,7 @@ import com.squareup.picasso.Picasso;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -80,7 +85,6 @@ import java.util.Random;
 
 public class Main2Activity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener{
-
 
     public static String USERDATA = "";
     private TextView mTextMessage;
@@ -107,6 +111,9 @@ public class Main2Activity extends BaseActivity
     public ImageButton mSearchBtn;
     public SnapHelper snapHelper;
     public LinearLayout linear_carousel_area;
+    public HashMap<String, String> imageURLs = new HashMap<String, String>();
+    public SliderLayout sliderLayout ;
+    public News news;
 
 
 
@@ -150,9 +157,11 @@ public class Main2Activity extends BaseActivity
             .orderByChild("service_id")
             .limitToLast(50);
     public Query query1 = dbNewsRef
-            //.orderByChild("revtimestamp");
+            .orderByChild("revtimestamp")
             //.orderByChild("top_card").equalTo("yes")
-            .limitToFirst(3);
+            .limitToFirst(7);
+
+
 
     FirebaseRecyclerOptions<Services> options = new FirebaseRecyclerOptions.Builder<Services>()
             .setQuery(query,Services.class).build();
@@ -165,12 +174,13 @@ public class Main2Activity extends BaseActivity
         @Override
         protected void onBindViewHolder(@NonNull ServicesHolder holder, int position, @NonNull Services model) {
             holder.service_text.setText(model.getService_text());
-            holder.service_tex.setText(model.getService_tex());
+           // holder.service_tex.setText(model.getService_tex());
             holder.service_hidden_id.setText(model.getService_id());
             int color = androidColors[new Random().nextInt(androidColors.length)];
             holder.main2_image_wrap.setBackgroundColor(color);
             Picasso.with(getApplicationContext()).load(model.getImageUrl()).into(holder.service_image);
             Log.d("MainHolder" , "bound");
+            activateSlider();
 
         }
 
@@ -178,6 +188,7 @@ public class Main2Activity extends BaseActivity
         public ServicesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_recycler_items,parent,false);
             Log.d("MainHolder" , "created");
+            activateSlider();
             return new ServicesHolder(view);
 
         }
@@ -202,7 +213,7 @@ public class Main2Activity extends BaseActivity
         protected void onBindViewHolder(@NonNull OfferHolder holder, int position, @NonNull News model) {
             Log.d("OfferHolder" , "bound");
             Picasso.with(getApplicationContext()).load(model.getImageURL()).into(holder.offer_card_image);
-
+            activateSlider();
 
         }
 
@@ -210,6 +221,7 @@ public class Main2Activity extends BaseActivity
         public OfferHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carousel_card,parent,false);
             Log.d("OfferHolder" , "created");
+            activateSlider();
             return new OfferHolder(view);
 
         }
@@ -218,6 +230,7 @@ public class Main2Activity extends BaseActivity
         public void onDataChanged() {
             super.onDataChanged();
             //hideProgressDialog();
+
         }
 
         @Override
@@ -246,6 +259,27 @@ public class Main2Activity extends BaseActivity
         }
     };
     // dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
+
+
+    public ValueEventListener offerListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                news = postSnapshot.getValue(News.class);
+                try {
+                    imageURLs.put(news.getTitle(), news.getImageURL());
+                }
+                catch (Exception e){
+
+                }
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,6 +310,8 @@ public class Main2Activity extends BaseActivity
         linear_carousel_area = findViewById(R.id.linear_carousel_area);
 
         recycler_carousel = findViewById(R.id.recycler_carousel);
+
+        sliderLayout = findViewById(R.id.slider);
 
         androidColors = getResources().getIntArray(R.array.androidcolors);
 
@@ -325,10 +361,18 @@ public class Main2Activity extends BaseActivity
 
             }
         });
+        dbNewsRef.addValueEventListener(offerListener);
 
-        double heightLinearOfferBlock = getResources().getDisplayMetrics().heightPixels / 5.5;
-        LinearLayout.LayoutParams lpOfferBlock = (LinearLayout.LayoutParams)linear_carousel_area.getLayoutParams();
-        lpOfferBlock.height = (int)heightLinearOfferBlock;
+//        double heightLinearOfferBlock = getResources().getDisplayMetrics().heightPixels / 5.5;
+//        LinearLayout.LayoutParams lpOfferBlock = (LinearLayout.LayoutParams)linear_carousel_area.getLayoutParams();
+//        lpOfferBlock.height = (int)heightLinearOfferBlock;
+
+
+
+//        int size = imageURLs.size();
+//        if(size>0){
+//            activateSlider();
+//        }
 
     }
 
@@ -358,28 +402,24 @@ public class Main2Activity extends BaseActivity
         }
         main_adapter.startListening();
         news_adapter.startListening();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        activateSlider();
         if(user != null) {
             dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
         }
+        activateSlider();
         mainlayoutrecycler.setLayoutManager(lm);
         mainlayoutrecycler.setItemAnimator(null);
 
-        recycler_carousel.setLayoutManager(lm1);
-        recycler_carousel.setItemAnimator(null);
+//        recycler_carousel.setLayoutManager(lm1);
+//        recycler_carousel.setItemAnimator(null);
 
 
-
-
-        //mainlayoutrecycler.setItemAnimator(new DefaultItemAnimator());
-        //mainlayoutrecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        //mainlayoutrecycler.notifyDataSetChanged();
-        //mainlayoutrecycler.startListening();
 
          mainlayoutrecycler.addOnItemTouchListener(new RecyclerTouchListener(this, new RecyclerTouchListener.OnItemClickListener() {
              @Override
@@ -416,8 +456,8 @@ public class Main2Activity extends BaseActivity
         main_adapter.notifyDataSetChanged();
         mainlayoutrecycler.setAdapter(main_adapter);
 
-        news_adapter.notifyDataSetChanged();
-        recycler_carousel.setAdapter(news_adapter);
+//        news_adapter.notifyDataSetChanged();
+//        recycler_carousel.setAdapter(news_adapter);
        // news_adapter.notifyDataSetChanged();
        // recycler_carousel.setAdapter(news_adapter);
         //getToken("password", "2", "tHCzyYG6Iv67kVW4mJObOWuKCO0KqfhxzFYEe5DC",
@@ -507,6 +547,7 @@ public class Main2Activity extends BaseActivity
         super.onStop();
         main_adapter.stopListening();
         news_adapter.stopListening();
+        sliderLayout.stopAutoCycle();
     }
 
     @Override
@@ -668,6 +709,38 @@ public class Main2Activity extends BaseActivity
             return null;
         }
     }
+
+    public void activateSlider(){
+        for(String name : imageURLs.keySet()){
+
+            TextSliderView textSliderView = new TextSliderView(Main2Activity.this);
+
+            textSliderView
+                    .description(name)
+                    .image(imageURLs.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+                   // .setOnSliderClickListener(this);
+
+            textSliderView.bundle(new Bundle());
+
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+            sliderLayout.addSlider(textSliderView);
+        }
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+
+        sliderLayout.setDuration(3000);
+
+       // sliderLayout.addOnPageChangeListener(this);
+    }
+
+
+
 
 
 

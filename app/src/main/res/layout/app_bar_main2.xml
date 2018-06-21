@@ -6,33 +6,55 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".Main2Activity"
-    
+
     android:id="@+id/main2_coord">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-        <LinearLayout
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:fitsSystemWindows="true"
+        android:stateListAnimator="@animator/appbar_always_elevated"
+        android:gravity="bottom">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/maincollapsing"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags = "scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/colorPrimary"
             >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/header_area"
+                >
+
+            </LinearLayout>
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="170dp"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode = "parallax"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
+                android:layout_height="60dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:layout_collapseMode = "pin"
-                android:gravity="bottom"
                 app:titleTextAppearance="@style/Toolbar.TitleText"
-                android:layout_gravity="bottom"
-                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                >
 
             </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
 
 
-        </LinearLayout>
+
 
 
 
