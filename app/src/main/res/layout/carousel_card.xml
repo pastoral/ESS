@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
     <!--android:layout_height="?android:attr/listPreferredItemHeightLarge"-->
     <!--android:layout_width="?android:attr/listPreferredItemHeightLarge"-->
     <FrameLayout
 
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:background="#FFFFFF"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="70dp"
         android:foregroundGravity="center"
         android:foreground="?android:attr/selectableItemBackground"
         >
@@ -24,8 +26,9 @@
             android:layout_gravity="center"
             >
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
+                android:maxHeight="135dp"
                 android:src="@drawable/home_applinaces"
                 android:id="@+id/offer_card_image"
                 android:scaleType="fitCenter"
@@ -34,4 +37,4 @@
 
     </FrameLayout>
 
-</layout>
+</LinearLayout>

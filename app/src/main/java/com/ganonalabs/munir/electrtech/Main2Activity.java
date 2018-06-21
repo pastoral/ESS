@@ -2,6 +2,7 @@ package com.ganonalabs.munir.electrtech;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +28,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -41,6 +44,7 @@ import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
 import com.ganonalabs.munir.electrtech.interfaces.ItemClickListner;
 import com.ganonalabs.munir.electrtech.model.AppUser;
+import com.ganonalabs.munir.electrtech.model.News;
 import com.ganonalabs.munir.electrtech.model.Services;
 import com.ganonalabs.munir.electrtech.ui.JobPostingActivity;
 
@@ -48,6 +52,7 @@ import com.ganonalabs.munir.electrtech.ui.OrderHistoryListActivity;
 import com.ganonalabs.munir.electrtech.ui.SearchActivity;
 import com.ganonalabs.munir.electrtech.ui.UserProfileActivity;
 import com.ganonalabs.munir.electrtech.utils.RecyclerTouchListener;
+import com.ganonalabs.munir.electrtech.viewholders.OfferHolder;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -62,9 +67,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+
 
 
 public class Main2Activity extends BaseActivity
@@ -79,7 +88,7 @@ public class Main2Activity extends BaseActivity
     //private Query query;
     //private FirebaseDatabase firebaseDatabase;
     public RecyclerView mainlayoutrecycler, recycler_carousel;
-    public RecyclerView.LayoutManager lm;
+    public RecyclerView.LayoutManager lm, lm1;
     public AppUser appUser;
     public TextView txtusername,txtuseremail,txtuserphone;
     public Button btneditprofile;
@@ -99,12 +108,17 @@ public class Main2Activity extends BaseActivity
 
 
 
+
+
     public DatabaseReference serviceDB = FirebaseDatabase.getInstance()
             .getReference()
             .child("services");
     private DatabaseReference dbUserRef = FirebaseDatabase.getInstance()
             .getReference()
             .child("users");
+    private DatabaseReference dbNewsRef = FirebaseDatabase.getInstance()
+            .getReference()
+            .child("news");
 
     private TokenDataApiService tokenDataAPIService = TokenDataApiUtils.getUserDataAPIServices();
 
@@ -135,9 +149,16 @@ public class Main2Activity extends BaseActivity
     public Query query = serviceDB
             .orderByChild("service_id")
             .limitToLast(50);
+    public Query query1 = dbNewsRef
+            //.orderByChild("revtimestamp");
+            //.orderByChild("top_card").equalTo("yes")
+            .limitToFirst(3);
 
     FirebaseRecyclerOptions<Services> options = new FirebaseRecyclerOptions.Builder<Services>()
             .setQuery(query,Services.class).build();
+
+    FirebaseRecyclerOptions<News> options1 = new FirebaseRecyclerOptions.Builder<News>()
+            .setQuery(query1,News.class).build();
 
 
     public FirebaseRecyclerAdapter main_adapter = new FirebaseRecyclerAdapter<Services,ServicesHolder>(options) {
@@ -149,13 +170,14 @@ public class Main2Activity extends BaseActivity
             int color = androidColors[new Random().nextInt(androidColors.length)];
             holder.main2_image_wrap.setBackgroundColor(color);
             Picasso.with(getApplicationContext()).load(model.getImageUrl()).into(holder.service_image);
+            Log.d("MainHolder" , "bound");
 
         }
 
         @Override
         public ServicesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_recycler_items,parent,false);
-
+            Log.d("MainHolder" , "created");
             return new ServicesHolder(view);
 
         }
@@ -173,6 +195,36 @@ public class Main2Activity extends BaseActivity
         }
     };
 
+
+    public FirebaseRecyclerAdapter news_adapter = new FirebaseRecyclerAdapter<News,OfferHolder>(options1) {
+        @Override
+        protected void onBindViewHolder(@NonNull OfferHolder holder, int position, @NonNull News model) {
+            Log.d("OfferHolder" , "bound");
+            Picasso.with(getApplicationContext()).load(model.getImageURL()).into(holder.offer_card_image);
+
+
+        }
+
+        @Override
+        public OfferHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carousel_card,parent,false);
+            Log.d("OfferHolder" , "created");
+            return new OfferHolder(view);
+
+        }
+
+        @Override
+        public void onDataChanged() {
+            super.onDataChanged();
+            //hideProgressDialog();
+        }
+
+        @Override
+        public void onError(@NonNull DatabaseError error) {
+            super.onError(error);
+            Toast.makeText(getApplicationContext(),"Error Data Loading..",Toast.LENGTH_SHORT).show();
+        }
+    };
 
 
     public ValueEventListener profileListener = new ValueEventListener() {
@@ -212,6 +264,7 @@ public class Main2Activity extends BaseActivity
                 .getReference().child("users");
         serviceDB.keepSynced(true);
         dbUserRef.keepSynced(true);
+        dbNewsRef.keepSynced(true);
 
 
 
@@ -226,6 +279,7 @@ public class Main2Activity extends BaseActivity
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         lm = new GridLayoutManager(getApplicationContext(),2);
+        lm1 = new GridLayoutManager(getApplicationContext(),1);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -262,6 +316,7 @@ public class Main2Activity extends BaseActivity
             }
         });
 
+
     }
 
     @Override
@@ -289,6 +344,7 @@ public class Main2Activity extends BaseActivity
             }
         }
         main_adapter.startListening();
+        news_adapter.startListening();
     }
 
     @Override
@@ -300,6 +356,9 @@ public class Main2Activity extends BaseActivity
         }
         mainlayoutrecycler.setLayoutManager(lm);
         mainlayoutrecycler.setItemAnimator(null);
+        recycler_carousel.setLayoutManager(lm1);
+        recycler_carousel.setItemAnimator(null);
+
 
         //mainlayoutrecycler.setItemAnimator(new DefaultItemAnimator());
         //mainlayoutrecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -340,9 +399,14 @@ public class Main2Activity extends BaseActivity
          }));
         main_adapter.notifyDataSetChanged();
         mainlayoutrecycler.setAdapter(main_adapter);
+
+        news_adapter.notifyDataSetChanged();
+        recycler_carousel.setAdapter(news_adapter);
+       // news_adapter.notifyDataSetChanged();
+       // recycler_carousel.setAdapter(news_adapter);
         //getToken("password", "2", "tHCzyYG6Iv67kVW4mJObOWuKCO0KqfhxzFYEe5DC",
         //   "shofin.cse@gmail.com", "123456");
-
+        String m = null;
         //sendData();
         // postJob();
 
@@ -426,6 +490,7 @@ public class Main2Activity extends BaseActivity
     protected void onStop() {
         super.onStop();
         main_adapter.stopListening();
+        news_adapter.stopListening();
     }
 
     @Override
@@ -575,6 +640,17 @@ public class Main2Activity extends BaseActivity
         Intent i  = new Intent(getApplicationContext(), UserProfileActivity.class);
         i.putExtra("USERDATA",appUser);
         startActivity(i);
+    }
+
+    public Drawable createBitmapFromURL(String url){
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            System.out.println("Exc=" + e);
+            return null;
+        }
     }
 
 
