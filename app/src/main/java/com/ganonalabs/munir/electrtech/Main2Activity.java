@@ -13,7 +13,9 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -88,7 +90,8 @@ public class Main2Activity extends BaseActivity
     //private Query query;
     //private FirebaseDatabase firebaseDatabase;
     public RecyclerView mainlayoutrecycler, recycler_carousel;
-    public RecyclerView.LayoutManager lm, lm1;
+    public RecyclerView.LayoutManager lm;
+    public LinearLayoutManager lm1;
     public AppUser appUser;
     public TextView txtusername,txtuseremail,txtuserphone;
     public Button btneditprofile;
@@ -102,11 +105,8 @@ public class Main2Activity extends BaseActivity
    public CardView bankcardId;
    public EditText mSearchField;
     public ImageButton mSearchBtn;
-
-
-
-
-
+    public SnapHelper snapHelper;
+    public LinearLayout linear_carousel_area;
 
 
 
@@ -197,6 +197,7 @@ public class Main2Activity extends BaseActivity
 
 
     public FirebaseRecyclerAdapter news_adapter = new FirebaseRecyclerAdapter<News,OfferHolder>(options1) {
+
         @Override
         protected void onBindViewHolder(@NonNull OfferHolder holder, int position, @NonNull News model) {
             Log.d("OfferHolder" , "bound");
@@ -272,14 +273,23 @@ public class Main2Activity extends BaseActivity
         mainlayoutrecycler = findViewById(R.id.mainlayoutrecycler);
         main2_coord = findViewById(R.id.main2_coord);
 
+        linear_carousel_area = findViewById(R.id.linear_carousel_area);
+
         recycler_carousel = findViewById(R.id.recycler_carousel);
 
         androidColors = getResources().getIntArray(R.array.androidcolors);
 
+        snapHelper = new LinearSnapHelper();
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         lm = new GridLayoutManager(getApplicationContext(),2);
-        lm1 = new GridLayoutManager(getApplicationContext(),1);
+
+        lm1 = new LinearLayoutManager(this);
+        lm1.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        snapHelper.attachToRecyclerView(recycler_carousel);
+        recycler_carousel.setLayoutManager(lm1);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -316,6 +326,9 @@ public class Main2Activity extends BaseActivity
             }
         });
 
+        double heightLinearOfferBlock = getResources().getDisplayMetrics().heightPixels / 5.5;
+        LinearLayout.LayoutParams lpOfferBlock = (LinearLayout.LayoutParams)linear_carousel_area.getLayoutParams();
+        lpOfferBlock.height = (int)heightLinearOfferBlock;
 
     }
 
@@ -356,8 +369,11 @@ public class Main2Activity extends BaseActivity
         }
         mainlayoutrecycler.setLayoutManager(lm);
         mainlayoutrecycler.setItemAnimator(null);
+
         recycler_carousel.setLayoutManager(lm1);
         recycler_carousel.setItemAnimator(null);
+
+
 
 
         //mainlayoutrecycler.setItemAnimator(new DefaultItemAnimator());

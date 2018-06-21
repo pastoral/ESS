@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:id="@+id/linear_carousel_area"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/content_main2"
@@ -10,13 +11,12 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_behavior="@string/bottom_sheet_behavior"
         >
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recycler_carousel"
-            android:fillViewport="true"
             android:clipToPadding="false">
 
         </android.support.v7.widget.RecyclerView>

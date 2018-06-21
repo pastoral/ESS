@@ -51,12 +51,12 @@
                     android:background="@android:color/background_light"
                     app:srcCompat="@mipmap/search_button" />
         </RelativeLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
             <include layout="@layout/main_top_carousel" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <android.support.v4.widget.NestedScrollView
             android:layout_height="match_parent"

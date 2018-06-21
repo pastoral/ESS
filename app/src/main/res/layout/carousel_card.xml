@@ -11,7 +11,7 @@
     <FrameLayout
 
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:background="#FFFFFF"
         android:foregroundGravity="center"
         android:foreground="?android:attr/selectableItemBackground"
@@ -23,12 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             card_view:cardUseCompatPadding="true"
-            android:layout_gravity="center"
+
             >
             <ImageView
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="135dp"
                 android:src="@drawable/home_applinaces"
                 android:id="@+id/offer_card_image"
                 android:scaleType="fitCenter"
