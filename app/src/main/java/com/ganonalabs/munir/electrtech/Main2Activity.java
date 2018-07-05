@@ -39,10 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
+
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -84,7 +81,7 @@ import java.util.Random;
 
 
 public class Main2Activity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener{
 
     public static String USERDATA = "";
     private TextView mTextMessage;
@@ -112,8 +109,21 @@ public class Main2Activity extends BaseActivity
     public SnapHelper snapHelper;
     public LinearLayout linear_carousel_area;
     public HashMap<String, String> imageURLs = new HashMap<String, String>();
-    public SliderLayout sliderLayout ;
+    public List<String> imageURLList = new ArrayList<String>();
+    //public SliderLayout sliderLayout ;
     public News news;
+
+    private android.support.v4.view.ViewPager mViewPager;
+
+    private com.ganonalabs.munir.electrtech.slider.CardPagerAdapter mCardAdapter;
+    private com.ganonalabs.munir.electrtech.slider.ShadowTransformer mCardShadowTransformer;
+    private com.ganonalabs.munir.electrtech.slider.CardFragmentPagerAdapter mFragmentCardAdapter;
+    private com.ganonalabs.munir.electrtech.slider.ShadowTransformer mFragmentCardShadowTransformer;
+    private boolean mShowingFragments = false;
+
+    private com.synnapps.carouselview.CarouselView carouselView ;
+    private String[] ImageUrlArr;
+
 
 
 
@@ -180,7 +190,7 @@ public class Main2Activity extends BaseActivity
             holder.main2_image_wrap.setBackgroundColor(color);
             Picasso.with(getApplicationContext()).load(model.getImageUrl()).into(holder.service_image);
             Log.d("MainHolder" , "bound");
-            activateSlider();
+            //activateSlider();
 
         }
 
@@ -188,7 +198,7 @@ public class Main2Activity extends BaseActivity
         public ServicesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_recycler_items,parent,false);
             Log.d("MainHolder" , "created");
-            activateSlider();
+           // activateSlider();
             return new ServicesHolder(view);
 
         }
@@ -213,7 +223,7 @@ public class Main2Activity extends BaseActivity
         protected void onBindViewHolder(@NonNull OfferHolder holder, int position, @NonNull News model) {
             Log.d("OfferHolder" , "bound");
             Picasso.with(getApplicationContext()).load(model.getImageURL()).into(holder.offer_card_image);
-            activateSlider();
+            //activateSlider();
 
         }
 
@@ -221,7 +231,7 @@ public class Main2Activity extends BaseActivity
         public OfferHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carousel_card,parent,false);
             Log.d("OfferHolder" , "created");
-            activateSlider();
+            //activateSlider();
             return new OfferHolder(view);
 
         }
@@ -268,11 +278,14 @@ public class Main2Activity extends BaseActivity
                 news = postSnapshot.getValue(News.class);
                 try {
                     imageURLs.put(news.getTitle(), news.getImageURL());
+                    imageURLList.add(news.getImageURL());
+
                 }
                 catch (Exception e){
 
                 }
             }
+            ImageUrlArr = imageURLList.toArray(new String[imageURLList.size()]);
         }
 
         @Override
@@ -285,6 +298,24 @@ public class Main2Activity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+
+
+        mViewPager = (android.support.v4.view.ViewPager) findViewById(R.id.viewPager);
+        mCardAdapter = new com.ganonalabs.munir.electrtech.slider.CardPagerAdapter();
+        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_1, R.string.text_1));
+        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_2, R.string.text_1));
+        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_3, R.string.text_1));
+        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_4, R.string.text_1));
+        mFragmentCardAdapter = new com.ganonalabs.munir.electrtech.slider.CardFragmentPagerAdapter(getSupportFragmentManager(),
+                dpToPixels(2, this));
+
+        mCardShadowTransformer = new com.ganonalabs.munir.electrtech.slider.ShadowTransformer(mViewPager, mCardAdapter);
+        mFragmentCardShadowTransformer = new com.ganonalabs.munir.electrtech.slider.ShadowTransformer(mViewPager, mFragmentCardAdapter);
+
+        mViewPager.setAdapter(mCardAdapter);
+        mViewPager.setPageTransformer(false, mCardShadowTransformer);
+        mViewPager.setOffscreenPageLimit(3);
 
 
 
@@ -311,7 +342,7 @@ public class Main2Activity extends BaseActivity
 
         recycler_carousel = findViewById(R.id.recycler_carousel);
 
-        sliderLayout = findViewById(R.id.slider);
+        //sliderLayout = findViewById(R.id.slider);
 
         androidColors = getResources().getIntArray(R.array.androidcolors);
 
@@ -319,13 +350,13 @@ public class Main2Activity extends BaseActivity
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        lm = new GridLayoutManager(getApplicationContext(),2);
+        lm = new GridLayoutManager(getApplicationContext(),3);
 
         lm1 = new LinearLayoutManager(this);
         lm1.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        snapHelper.attachToRecyclerView(recycler_carousel);
-        recycler_carousel.setLayoutManager(lm1);
+        //snapHelper.attachToRecyclerView(recycler_carousel);
+       // recycler_carousel.setLayoutManager(lm1);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -374,6 +405,17 @@ public class Main2Activity extends BaseActivity
 //            activateSlider();
 //        }
 
+     com.synnapps.carouselview.ImageListener imageListener = new com.synnapps.carouselview.ImageListener() {
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            if(imageURLList.size() > 0){
+
+            ImageUrlArr = imageURLList.toArray(new String[imageURLList.size()]);
+            imageView.setImageResource(ImageUrlArr[position]);
+            }
+        }
+    };
+
     }
 
     @Override
@@ -408,11 +450,11 @@ public class Main2Activity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        activateSlider();
+        //activateSlider();
         if(user != null) {
             dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
         }
-        activateSlider();
+        //activateSlider();
         mainlayoutrecycler.setLayoutManager(lm);
         mainlayoutrecycler.setItemAnimator(null);
 
@@ -547,7 +589,7 @@ public class Main2Activity extends BaseActivity
         super.onStop();
         main_adapter.stopListening();
         news_adapter.stopListening();
-        sliderLayout.stopAutoCycle();
+       // sliderLayout.stopAutoCycle();
     }
 
     @Override
@@ -710,36 +752,54 @@ public class Main2Activity extends BaseActivity
         }
     }
 
-    public void activateSlider(){
-        for(String name : imageURLs.keySet()){
+//    public void activateSlider(){
+//        for(String name : imageURLs.keySet()){
+//
+//            TextSliderView textSliderView = new TextSliderView(Main2Activity.this);
+//
+//            textSliderView
+//                    .description(name)
+//                    .image(imageURLs.get(name))
+//                    .setScaleType(BaseSliderView.ScaleType.Fit);
+//                   // .setOnSliderClickListener(this);
+//
+//            textSliderView.bundle(new Bundle());
+//
+//            textSliderView.getBundle()
+//                    .putString("extra",name);
+//
+//            sliderLayout.addSlider(textSliderView);
+//        }
+//        sliderLayout.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+//
+//        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+//
+//        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+//
+//        sliderLayout.setDuration(3000);
+//
+//       // sliderLayout.addOnPageChangeListener(this);
+//    }
 
-            TextSliderView textSliderView = new TextSliderView(Main2Activity.this);
-
-            textSliderView
-                    .description(name)
-                    .image(imageURLs.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit);
-                   // .setOnSliderClickListener(this);
-
-            textSliderView.bundle(new Bundle());
-
-            textSliderView.getBundle()
-                    .putString("extra",name);
-
-            sliderLayout.addSlider(textSliderView);
-        }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.DepthPage);
-
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
-
-        sliderLayout.setDuration(3000);
-
-       // sliderLayout.addOnPageChangeListener(this);
+     public static float dpToPixels(int dp, android.content.Context context) {
+        return dp * (context.getResources().getDisplayMetrics().density);
     }
 
 
+    @Override
+    public void onClick(View view) {
+        if (!mShowingFragments) {
+            //mButton.setText("Views");
+            mViewPager.setAdapter(mFragmentCardAdapter);
+            mViewPager.setPageTransformer(false, mFragmentCardShadowTransformer);
+        } else {
+            //mButton.setText("Fragments");
+            mViewPager.setAdapter(mCardAdapter);
+            mViewPager.setPageTransformer(false, mCardShadowTransformer);
+        }
+
+        mShowingFragments = !mShowingFragments;
+    }
 
 
 

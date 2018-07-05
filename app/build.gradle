@@ -79,7 +79,8 @@ dependencies {
     implementation 'com.github.baoyachi:StepView:1.9'
     implementation 'com.jpardogo.googleprogressbar:library:1.2.0'
     implementation 'com.nineoldandroids:library:2.4.0'
-    implementation 'com.daimajia.slider:library:1.1.5@aar'
+    implementation 'com.synnapps:carouselview:0.1.4'
+
 
     debugImplementation 'com.amitshekhar.android:debug-db:0.5.0'
     testImplementation 'junit:junit:4.12'

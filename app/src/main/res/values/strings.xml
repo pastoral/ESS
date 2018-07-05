@@ -130,4 +130,12 @@
     <string name="hint_phone_number"><i>0171000000</i></string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_news_list">NewsListActivity</string>
+
+    <string name="title_1">Cool card</string>
+    <string name="title_2">Ok card</string>
+    <string name="title_3">Bad card</string>
+    <string name="title_4">Ugly card</string>
+
+    <string name="text_1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Etiam eget ligula eu lectus lobortis condimentum.</string>
+
 </resources>

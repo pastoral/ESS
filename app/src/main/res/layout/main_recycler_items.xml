@@ -13,13 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/main2_image_wrap"
-            android:gravity="center">
+            android:gravity="center"
+            android:minHeight="100dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,8 +29,8 @@
 
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/home_applinaces"
                     android:id="@+id/service_image"
                     android:padding="2dp"/>
@@ -43,11 +45,7 @@
                 android:id="@+id/service_text"
                 android:textSize="12sp"
                 android:text="Home Appliances"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#FFFFFF"
-                android:layout_margin="1dp"/>
+
             <!--<TextView-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content"-->
