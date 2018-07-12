@@ -24,7 +24,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ganonalabs.munir.electrtech.BaseActivity;
 import com.ganonalabs.munir.electrtech.R;
-import com.ganonalabs.munir.electrtech.adapters.CustomSpinnerArrayAdapter;
+//import com.ganonalabs.munir.electrtech.adapters.CustomSpinnerArrayAdapter;
 import com.ganonalabs.munir.electrtech.data.model.Brands;
 import com.ganonalabs.munir.electrtech.data.model.Brands_Data;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;

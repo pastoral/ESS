@@ -1,8 +1,12 @@
 package com.ganonalabs.munir.electrtech;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -77,11 +81,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-
+import static com.ganonalabs.munir.electrtech.MyESS.getContext;
 
 
 public class Main2Activity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener{
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     public static String USERDATA = "";
     private TextView mTextMessage;
@@ -115,10 +119,10 @@ public class Main2Activity extends BaseActivity
 
     private android.support.v4.view.ViewPager mViewPager;
 
-    private com.ganonalabs.munir.electrtech.slider.CardPagerAdapter mCardAdapter;
-    private com.ganonalabs.munir.electrtech.slider.ShadowTransformer mCardShadowTransformer;
-    private com.ganonalabs.munir.electrtech.slider.CardFragmentPagerAdapter mFragmentCardAdapter;
-    private com.ganonalabs.munir.electrtech.slider.ShadowTransformer mFragmentCardShadowTransformer;
+//    private com.ganonalabs.munir.electrtech.slider.CardPagerAdapter mCardAdapter;
+//    private com.ganonalabs.munir.electrtech.slider.ShadowTransformer mCardShadowTransformer;
+//    private com.ganonalabs.munir.electrtech.slider.CardFragmentPagerAdapter mFragmentCardAdapter;
+//    private com.ganonalabs.munir.electrtech.slider.ShadowTransformer mFragmentCardShadowTransformer;
     private boolean mShowingFragments = false;
 
     private com.synnapps.carouselview.CarouselView carouselView ;
@@ -167,9 +171,9 @@ public class Main2Activity extends BaseActivity
             .orderByChild("service_id")
             .limitToLast(50);
     public Query query1 = dbNewsRef
-            .orderByChild("revtimestamp")
+            .orderByChild("revtimestamp");
             //.orderByChild("top_card").equalTo("yes")
-            .limitToFirst(7);
+            //.limitToFirst(7);
 
 
 
@@ -248,6 +252,11 @@ public class Main2Activity extends BaseActivity
             super.onError(error);
             Toast.makeText(getApplicationContext(),"Error Data Loading..",Toast.LENGTH_SHORT).show();
         }
+
+        @Override
+        public int getItemCount() {
+            return super.getItemCount();
+        }
     };
 
 
@@ -271,28 +280,28 @@ public class Main2Activity extends BaseActivity
     // dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
 
 
-    public ValueEventListener offerListener = new ValueEventListener() {
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                news = postSnapshot.getValue(News.class);
-                try {
-                    imageURLs.put(news.getTitle(), news.getImageURL());
-                    imageURLList.add(news.getImageURL());
-
-                }
-                catch (Exception e){
-
-                }
-            }
-            ImageUrlArr = imageURLList.toArray(new String[imageURLList.size()]);
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
+//    public ValueEventListener offerListener = new ValueEventListener() {
+//        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//        public void onDataChange(DataSnapshot dataSnapshot) {
+//            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                news = postSnapshot.getValue(News.class);
+//                try {
+//                    imageURLs.put(news.getTitle(), news.getImageURL());
+//                    imageURLList.add(news.getImageURL());
+//
+//                }
+//                catch (Exception e){
+//
+//                }
+//            }
+//            ImageUrlArr = imageURLList.toArray(new String[imageURLList.size()]);
+//        }
+//
+//        @Override
+//        public void onCancelled(DatabaseError databaseError) {
+//
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,28 +310,28 @@ public class Main2Activity extends BaseActivity
 
 
 
-        mViewPager = (android.support.v4.view.ViewPager) findViewById(R.id.viewPager);
-        mCardAdapter = new com.ganonalabs.munir.electrtech.slider.CardPagerAdapter();
-        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_1, R.string.text_1));
-        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_2, R.string.text_1));
-        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_3, R.string.text_1));
-        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_4, R.string.text_1));
-        mFragmentCardAdapter = new com.ganonalabs.munir.electrtech.slider.CardFragmentPagerAdapter(getSupportFragmentManager(),
-                dpToPixels(2, this));
-
-        mCardShadowTransformer = new com.ganonalabs.munir.electrtech.slider.ShadowTransformer(mViewPager, mCardAdapter);
-        mFragmentCardShadowTransformer = new com.ganonalabs.munir.electrtech.slider.ShadowTransformer(mViewPager, mFragmentCardAdapter);
-
-        mViewPager.setAdapter(mCardAdapter);
-        mViewPager.setPageTransformer(false, mCardShadowTransformer);
-        mViewPager.setOffscreenPageLimit(3);
+//        mViewPager = (android.support.v4.view.ViewPager) findViewById(R.id.viewPager);
+//        mCardAdapter = new com.ganonalabs.munir.electrtech.slider.CardPagerAdapter();
+//        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_1, R.string.text_1));
+//        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_2, R.string.text_1));
+//        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_3, R.string.text_1));
+//        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_4, R.string.text_1));
+//        mFragmentCardAdapter = new com.ganonalabs.munir.electrtech.slider.CardFragmentPagerAdapter(getSupportFragmentManager(),
+//                dpToPixels(2, this));
+//
+//        mCardShadowTransformer = new com.ganonalabs.munir.electrtech.slider.ShadowTransformer(mViewPager, mCardAdapter);
+//        mFragmentCardShadowTransformer = new com.ganonalabs.munir.electrtech.slider.ShadowTransformer(mViewPager, mFragmentCardAdapter);
+//
+//        mViewPager.setAdapter(mCardAdapter);
+//        mViewPager.setPageTransformer(false, mCardShadowTransformer);
+//        mViewPager.setOffscreenPageLimit(3);
 
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //showProgressDialog("Loading Data", getApplicationContext());
-
+        invalidateOptionsMenu();
         main2_image_wrap = findViewById(R.id.main2_image_wrap);
         bankcardId = findViewById(R.id.bankcardId);
 
@@ -352,8 +361,8 @@ public class Main2Activity extends BaseActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         lm = new GridLayoutManager(getApplicationContext(),3);
 
-        lm1 = new LinearLayoutManager(this);
-        lm1.setOrientation(LinearLayoutManager.HORIZONTAL);
+        lm1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
 
         //snapHelper.attachToRecyclerView(recycler_carousel);
        // recycler_carousel.setLayoutManager(lm1);
@@ -374,47 +383,25 @@ public class Main2Activity extends BaseActivity
         imguser = hView.findViewById(R.id.imguser);
         btneditprofile = hView.findViewById(R.id.btneditprofile);
 
-        mSearchField =  findViewById(R.id.search_field);
-        mSearchBtn =  findViewById(R.id.search_btn);
-
-
-        //dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String searchText = mSearchField.getText().toString();
-                Intent i  = new Intent(getApplicationContext(), SearchActivity.class);
-                i.putExtra("USERDATA",appUser);
-                i.putExtra("searchText", searchText);
-                startActivity(i);
-
-
-            }
-        });
-        dbNewsRef.addValueEventListener(offerListener);
-
-//        double heightLinearOfferBlock = getResources().getDisplayMetrics().heightPixels / 5.5;
-//        LinearLayout.LayoutParams lpOfferBlock = (LinearLayout.LayoutParams)linear_carousel_area.getLayoutParams();
-//        lpOfferBlock.height = (int)heightLinearOfferBlock;
+//        mSearchField =  findViewById(R.id.search_field);
+//        mSearchBtn =  findViewById(R.id.search_btn);
 
 
 
-//        int size = imageURLs.size();
-//        if(size>0){
-//            activateSlider();
-//        }
+//        mSearchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                String searchText = mSearchField.getText().toString();
+//                Intent i  = new Intent(getApplicationContext(), SearchActivity.class);
+//                i.putExtra("USERDATA",appUser);
+//                i.putExtra("searchText", searchText);
+//                startActivity(i);
+//
+//
+//            }
+//        });
 
-     com.synnapps.carouselview.ImageListener imageListener = new com.synnapps.carouselview.ImageListener() {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            if(imageURLList.size() > 0){
-
-            ImageUrlArr = imageURLList.toArray(new String[imageURLList.size()]);
-            imageView.setImageResource(ImageUrlArr[position]);
-            }
-        }
-    };
 
     }
 
@@ -458,8 +445,8 @@ public class Main2Activity extends BaseActivity
         mainlayoutrecycler.setLayoutManager(lm);
         mainlayoutrecycler.setItemAnimator(null);
 
-//        recycler_carousel.setLayoutManager(lm1);
-//        recycler_carousel.setItemAnimator(null);
+        recycler_carousel.setLayoutManager(lm1);
+        recycler_carousel.setItemAnimator(null);
 
 
 
@@ -498,8 +485,8 @@ public class Main2Activity extends BaseActivity
         main_adapter.notifyDataSetChanged();
         mainlayoutrecycler.setAdapter(main_adapter);
 
-//        news_adapter.notifyDataSetChanged();
-//        recycler_carousel.setAdapter(news_adapter);
+        news_adapter.notifyDataSetChanged();
+        recycler_carousel.setAdapter(news_adapter);
        // news_adapter.notifyDataSetChanged();
        // recycler_carousel.setAdapter(news_adapter);
         //getToken("password", "2", "tHCzyYG6Iv67kVW4mJObOWuKCO0KqfhxzFYEe5DC",
@@ -522,27 +509,7 @@ public class Main2Activity extends BaseActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -786,22 +753,68 @@ public class Main2Activity extends BaseActivity
     }
 
 
-    @Override
-    public void onClick(View view) {
-        if (!mShowingFragments) {
-            //mButton.setText("Views");
-            mViewPager.setAdapter(mFragmentCardAdapter);
-            mViewPager.setPageTransformer(false, mFragmentCardShadowTransformer);
-        } else {
-            //mButton.setText("Fragments");
-            mViewPager.setAdapter(mCardAdapter);
-            mViewPager.setPageTransformer(false, mCardShadowTransformer);
-        }
+//    @Override
+//    public void onClick(View view) {
+//        if (!mShowingFragments) {
+//            //mButton.setText("Views");
+//            mViewPager.setAdapter(mFragmentCardAdapter);
+//            mViewPager.setPageTransformer(false, mFragmentCardShadowTransformer);
+//        } else {
+//            //mButton.setText("Fragments");
+//            mViewPager.setAdapter(mCardAdapter);
+//            mViewPager.setPageTransformer(false, mCardShadowTransformer);
+//        }
+//
+//        mShowingFragments = !mShowingFragments;
+//    }
 
-        mShowingFragments = !mShowingFragments;
+    public void loadFacebook(View v){
+        String url = "https://www.facebook.com/efficientservicesystem";
+        PackageManager pkm = getContext().getPackageManager();
+        Intent i = newFacebookIntent(pkm,url);
+        startActivity(i);
     }
 
+    public void loadWeb(View v){
+        String url = "http://ess-bd.com/";
+         Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
 
+    }
+
+    public void loadInstagram(View v){
+        Uri uri = Uri.parse("http://instagram.com/_u/symphony_mobile/");
+        Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+        likeIng.setPackage("com.instagram.android");
+
+        try {
+            startActivity(likeIng);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://instagram.com/symphony_mobile/")));
+        }
+    }
+
+    public static Intent newFacebookIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+        try {
+            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
+            if (applicationInfo.enabled) {
+                // http://stackoverflow.com/a/24547437/1048340
+                uri = Uri.parse("fb://facewebmodal/f?href=" + url);
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        return new Intent(Intent.ACTION_VIEW, uri);
+    }
+
+    public void callhelpline(View view){
+        Uri number = Uri.parse("tel:"+"09610002020");
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+        getApplicationContext().startActivity(callIntent);
+    }
 
 
 }

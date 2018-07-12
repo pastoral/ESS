@@ -21,4 +21,9 @@
     <dimen name="order_item_others_text_size">12sp</dimen>
     <dimen name="card_padding">23dp</dimen>
 
+    <dimen name="main_feature_icon">37dp</dimen>
+    <dimen name="main_second_block_icon">20dp</dimen>
+    <dimen name="main_quick_link_block_icon">32dp</dimen>
+    <dimen name="main_user_info">12sp</dimen>
+
 </resources>
