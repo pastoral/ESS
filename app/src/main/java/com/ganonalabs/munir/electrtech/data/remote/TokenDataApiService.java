@@ -2,6 +2,7 @@ package com.ganonalabs.munir.electrtech.data.remote;
 
 import com.ganonalabs.munir.electrtech.data.model.Brands;
 import com.ganonalabs.munir.electrtech.data.model.Brands_Data;
+import com.ganonalabs.munir.electrtech.data.model.JobDetails.JobDetails;
 import com.ganonalabs.munir.electrtech.data.model.JobPostResponse;
 import com.ganonalabs.munir.electrtech.data.model.JobRequests.MyJobRequestList;
 import com.ganonalabs.munir.electrtech.data.model.TokenClass;
@@ -54,5 +55,8 @@ public interface TokenDataApiService {
 
     @GET
     Call<MyJobRequestList> getMyJobRequests(@Url String url);
+
+    @GET
+    Call<JobDetails> getJobDetails(@Url String url);
 
 }
