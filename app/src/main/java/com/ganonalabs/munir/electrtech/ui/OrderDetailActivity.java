@@ -26,6 +26,7 @@ import com.ganonalabs.munir.electrtech.data.model.JobRequests.MyJobRequest;
 import com.ganonalabs.munir.electrtech.data.model.JobRequests.MyJobRequestList;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
+import com.squareup.picasso.Picasso;
 
 
 import org.json.JSONObject;
@@ -40,7 +41,7 @@ import retrofit2.Callback;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
-    private String orderid;
+    private String orderid,imageurl,date,amount,name;
     private TextView orderdatetime,txtorderid,ordername,txtbills,service_man_name;
     private ImageView service_man_image,service_man_phone, order_image;
     private List<StepBean> status = new ArrayList<>();
@@ -65,6 +66,10 @@ public class OrderDetailActivity extends AppCompatActivity {
         bundle = intent.getExtras();
 
         orderid = intent.getStringExtra("SERVICEID");
+        imageurl = intent.getStringExtra("SERVICEIMAGE");
+        date = intent.getStringExtra("SERVICEDATE");
+        amount = intent.getStringExtra("SERVICEAMOUNT");
+        name = intent.getStringExtra("SERVICENAME");
 
         orderdatetime = findViewById(R.id.orderdatetime);
         txtorderid = findViewById(R.id.txtorderid);
@@ -73,6 +78,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         service_man_name = findViewById(R.id.service_man_name);
         service_man_image = findViewById(R.id.service_man_image);
         jobDetailProgressBar = findViewById(R.id.jobDetailProgressBar);
+        order_image = findViewById(R.id.order_image);
+        orderdatetime = findViewById(R.id.orderdatetime);
 
         list.add("Service posted");
         list.add("Service accepted");
@@ -105,6 +112,12 @@ public class OrderDetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         txtorderid.setText(orderid);
+        orderdatetime.setText(date);
+        if(imageurl!=null) {
+            Picasso.with(this).load(imageurl).into(order_image);
+        }
+        ordername.setText(name);
+        txtbills.setText(amount);
 //        step_view.setStepViewTexts(status)
 //                .setTextSize(12)
 //                .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark))
@@ -122,9 +135,9 @@ public class OrderDetailActivity extends AppCompatActivity {
                 .setTextSize(12)
                 .setLinePaddingProportion(0.85f)
                 .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark))
-                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(getApplicationContext(), R.color.uncompleted_text_color))
+                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(getApplicationContext(), android.R.color.darker_gray))
                 .setStepViewComplectedTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_blue_dark))
-                .setStepViewUnComplectedTextColor(ContextCompat.getColor(getApplicationContext(), R.color.uncompleted_text_color))
+                .setStepViewUnComplectedTextColor(ContextCompat.getColor(getApplicationContext(), R.color.cardview_dark_background))
                 .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.notification_done))
                 .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_icon))
                 .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.attention));

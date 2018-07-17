@@ -5,14 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ganonalabs.munir.electrtech.R;
 import com.ganonalabs.munir.electrtech.interfaces.ItemClickListner;
 
 public class MyJobReqHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    public TextView order_item_id,order_item_date,order_item_status,jobhiddenid,order_item_address,order_item_service_name;
-    public ImageView order_item_service_image;
+    public TextView order_item_id,order_item_date,order_item_status,jobhiddenid,order_item_address,order_item_service_name,order_item_job_amount;
+    public ImageView order_item_service_image,order_item_money;
+    public LinearLayout linear_amount;
     private LayoutInflater layoutInflater;
     private Context context;
     public ItemClickListner itemClickListner;
@@ -36,6 +38,9 @@ public class MyJobReqHolder extends RecyclerView.ViewHolder implements View.OnCl
         jobhiddenid = view.findViewById(R.id.jobhiddenid);
         order_item_address = view.findViewById(R.id.order_item_address);
         order_item_service_image = view.findViewById(R.id.order_item_service_image);
+        order_item_money = view.findViewById(R.id.order_item_money);
+        order_item_job_amount = view.findViewById(R.id.order_item_job_amount);
+        linear_amount = view.findViewById(R.id.linear_amount);
         view.setOnClickListener(this);
 
 

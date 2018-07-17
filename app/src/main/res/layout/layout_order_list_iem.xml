@@ -31,7 +31,7 @@
                     android:maxLength="30"
                     android:background="#0000"
                     android:gravity="left"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:padding="@dimen/order_details_spacing"
                     />
@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:text="01 Jan 2018 6:00 PM"
                         android:id="@+id/order_item_date"
-                        android:textSize="@dimen/order_item_date_text_size"
+                        android:textSize="12sp"
                         />
 
                     <TextView
@@ -65,8 +65,8 @@
                     android:padding="@dimen/order_item_spacing">
                     <ImageView
                         android:id="@+id/order_item_service_image"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="left"
                         android:padding="@dimen/order_details_spacing"
                         android:src="@drawable/home_applinaces" />
@@ -79,7 +79,34 @@
                         android:textColor="#000000"
                         android:maxLength="30"
                         android:layout_gravity="center_vertical"
-                        android:textSize="@dimen/order_item_others_text_size"
+                        android:textSize="14sp"
+                        android:padding="@dimen/order_details_spacing"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/linear_amount"
+                    android:visibility="gone"
+                    android:padding="@dimen/order_item_spacing">
+                    <ImageView
+                        android:id="@+id/order_item_money"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="left"
+                        android:padding="@dimen/order_details_spacing"
+                        android:src="@drawable/ic_money" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/order_item_job_amount"
+                        android:text="0 BDT"
+                        android:textColor="#000000"
+                        android:maxLength="30"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="12sp"
                         android:padding="@dimen/order_details_spacing"
                         />
                 </LinearLayout>

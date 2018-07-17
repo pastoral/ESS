@@ -65,6 +65,7 @@ public class OrderHistoryListActivity extends AppCompatActivity {
         lm = new LinearLayoutManager(this);
 
         uid = intent.getStringExtra("uid");
+
         jobListRecycler = findViewById(R.id.jobListRecycler);
         jobListProgressBar = findViewById(R.id.jobListProgressBar);
         jobListProgressBar.setVisibility(View.VISIBLE);

@@ -27,6 +27,7 @@ public class MyJobReqAdapter extends RecyclerView.Adapter<MyJobReqHolder> {
     private Context mContext;
     private ItemClickListner itemClickListner;
     private OrderHistoryListActivity orderHistoryListActivity = new OrderHistoryListActivity();
+    private String amount;
 
 
 
@@ -54,7 +55,23 @@ public class MyJobReqAdapter extends RecyclerView.Adapter<MyJobReqHolder> {
         holder.order_item_status.setText(myJobRequestList.get(position).getRequestStatus());
         holder.order_item_address.setText(myJobRequestList.get(position).getAddress());
         holder.order_item_service_name.setText(myJobRequestList.get(position).getServiceItem());
+        if(myJobRequestList.get(position).getJobAmount() != null){
+            amount = myJobRequestList.get(position).getJobAmount() + " BDT";
+            holder.order_item_job_amount.setText(amount);
+            holder.linear_amount.setVisibility(View.VISIBLE);
+        }
+        else{
+            amount = String.valueOf(0);
+            holder.linear_amount.setVisibility(View.GONE);
+
+        }
+
+
         holder.jobhiddenid.setText(myJobRequestList.get(position).getId());
+
+
+        Picasso.with(mContext).load(myJobRequestList.get(position).getImageUrl()).into(holder.order_item_service_image);
+
 
 
         // Picasso.with(mContext).load(myJobRequestList.get(position).get).into(holder.service_image);
@@ -65,6 +82,10 @@ public class MyJobReqAdapter extends RecyclerView.Adapter<MyJobReqHolder> {
                 Log.d("Clicked",myJobRequestList.get(position).getServiceId());
                 Intent i = new Intent(mContext, OrderDetailActivity.class);
                 i.putExtra("SERVICEID", myJobRequestList.get(position).getServiceId());
+                i.putExtra("SERVICEIMAGE",myJobRequestList.get(position).getImageUrl());
+                i.putExtra("SERVICEAMOUNT",myJobRequestList.get(position).getJobAmount());
+                i.putExtra("SERVICEDATE",myJobRequestList.get(position).getExpectedDate());
+                i.putExtra("SERVICENAME",myJobRequestList.get(position).getServiceItem());
                 mContext.startActivity(i);
             }
         });

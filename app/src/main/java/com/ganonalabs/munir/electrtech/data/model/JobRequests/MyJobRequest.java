@@ -58,6 +58,11 @@ public class MyJobRequest {
     @SerializedName("requestStatusDate")
     @Expose
     private String requestStatusDate;
+    @SerializedName("ImageUrl")
+    @Expose
+    private String ImageUrl;
+
+
 
     /**
      * No args constructor for use in serialization
@@ -87,7 +92,7 @@ public class MyJobRequest {
      * @param group
      * @param clientEmail
      */
-    public MyJobRequest(String id, String serviceId, String jobAmount, String clientName, String clientPhone, String address, String clientEmail, String serviceItem, String serviceItemId, String problemDescription, String expectedDate, String employeesName, String group, String expectedTime, String employeesPhone, String technicalInput, String requestStatus, String requestStatusDate) {
+    public MyJobRequest(String id, String serviceId, String jobAmount, String clientName, String clientPhone, String address, String clientEmail, String serviceItem, String serviceItemId, String problemDescription, String expectedDate, String employeesName, String group, String expectedTime, String employeesPhone, String technicalInput, String requestStatus, String requestStatusDate, String ImageUrl) {
         super();
         this.id = id;
         this.serviceId = serviceId;
@@ -107,6 +112,7 @@ public class MyJobRequest {
         this.technicalInput = technicalInput;
         this.requestStatus = requestStatus;
         this.requestStatusDate = requestStatusDate;
+        this.ImageUrl = ImageUrl;
     }
 
     public String getId() {
@@ -251,5 +257,13 @@ public class MyJobRequest {
 
     public void setRequestStatusDate(String requestStatusDate) {
         this.requestStatusDate = requestStatusDate;
+    }
+
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
     }
 }
