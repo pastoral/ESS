@@ -112,7 +112,6 @@
     <orderEntry type="library" name="Gradle: com.firebaseui:firebase-ui-common-3.3.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-storage-15.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-database-connection-15.0.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.baoyachi:StepView-1.9" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-database-15.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.amitshekhar.android:debug-db-0.5.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-27.1.1" level="project" />
@@ -183,6 +182,7 @@
     <orderEntry type="library" name="Gradle: com.parse.bolts:bolts-tasks:1.4.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-15.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.13.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.vipulasri:timelineview-1.0.6" level="project" />
     <orderEntry type="library" name="Gradle: me.zhanghai.android.materialprogressbar:library-1.4.2" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.android:facebook-android-sdk-4.25.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-base-15.0.1" level="project" />

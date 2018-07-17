@@ -14,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.baoyachi.stepview.HorizontalStepView;
-import com.baoyachi.stepview.VerticalStepView;
-import com.baoyachi.stepview.bean.StepBean;
 import com.ganonalabs.munir.electrtech.R;
 import com.ganonalabs.munir.electrtech.adapters.MyJobReqAdapter;
 import com.ganonalabs.munir.electrtech.data.model.JobDetails.Datum;
@@ -44,15 +41,14 @@ public class OrderDetailActivity extends AppCompatActivity {
     private String orderid,imageurl,date,amount,name;
     private TextView orderdatetime,txtorderid,ordername,txtbills,service_man_name;
     private ImageView service_man_image,service_man_phone, order_image;
-    private List<StepBean> status = new ArrayList<>();
+    //private List<StepBean> status = new ArrayList<>();
     private Intent intent;
     private Bundle bundle;
     private TokenDataApiService tokenDataAPIService = TokenDataApiUtils.getUserDataAPIServices();
     private List<Datum> data = new ArrayList<Datum>();
     private ProgressBar jobDetailProgressBar;
 
-   // private HorizontalStepView step_view;
-    private VerticalStepView step_view;
+
     List<String> list= new ArrayList<>();
 
     @Override
@@ -81,22 +77,22 @@ public class OrderDetailActivity extends AppCompatActivity {
         order_image = findViewById(R.id.order_image);
         orderdatetime = findViewById(R.id.orderdatetime);
 
-        list.add("Service posted");
-        list.add("Service accepted");
-        list.add("Service assigned");
-        list.add("Service completed");
-        list.add("Service finished");
-
-
-
-        status.add(new StepBean("Service posted",1));
-        status.add(new StepBean("Service accepted",1));
-        status.add(new StepBean("assigned",0));
-        status.add(new StepBean("completed",-1));
+//        list.add("Service posted");
+//        list.add("Service accepted");
+//        list.add("Service assigned");
+//        list.add("Service completed");
+//        list.add("Service finished");
+//
+//
+//
+//        status.add(new StepBean("Service posted",1));
+//        status.add(new StepBean("Service accepted",1));
+//        status.add(new StepBean("assigned",0));
+//        status.add(new StepBean("completed",-1));
         //status.add(new StepBean("finished",5));
 
 
-        step_view = findViewById(R.id.step_view);
+
 
 
       //  step_view = findViewById(R.id.step_view);
@@ -118,46 +114,11 @@ public class OrderDetailActivity extends AppCompatActivity {
         }
         ordername.setText(name);
         txtbills.setText(amount);
-//        step_view.setStepViewTexts(status)
-//                .setTextSize(12)
-//                .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark))
-//                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(getApplicationContext(), R.color.uncompleted_text_color))
-//                .setStepViewComplectedTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_blue_dark))
-//                .setStepViewUnComplectedTextColor(ContextCompat.getColor(getApplicationContext(), R.color.uncompleted_text_color))
-//                .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.notification_done))
-//                .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_icon))
-//                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.attention));
-
-
-        step_view.setStepsViewIndicatorComplectingPosition(list.size() - 2)
-                .reverseDraw(false)
-                .setStepViewTexts(list)
-                .setTextSize(12)
-                .setLinePaddingProportion(0.85f)
-                .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark))
-                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(getApplicationContext(), android.R.color.darker_gray))
-                .setStepViewComplectedTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_blue_dark))
-                .setStepViewUnComplectedTextColor(ContextCompat.getColor(getApplicationContext(), R.color.cardview_dark_background))
-                .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.notification_done))
-                .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_icon))
-                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.attention));
-
-
 
 
     }
 
-    /**
-     * is reverse draw 是否倒序画
-     *
-     * @param isReverSe default is true
-     * @return
-     */
-    public VerticalStepView reverseDraw(boolean isReverSe)
-    {
-        this.step_view.reverseDraw(isReverSe);
-        return step_view;
-    }
+
 
     public void getMyJobRequestInfo(){
         Map<String, Object> jsonParams = new ArrayMap<>();
