@@ -73,6 +73,9 @@ dependencies {
 
     // FirebaseUI for Cloud Storage
     implementation 'com.firebaseui:firebase-ui-storage:3.3.1'
+
+    //implementation 'com.google.firebase:firebase-config:11.6.2'
+    //implementation 'com.google.firebase:firebase-invites:11.6.2'
     //implementation 'com.facebook.android:facebook-login:4.29.0'
     // never change this
     implementation('com.facebook.android:facebook-android-sdk:4.25.0') // never change this

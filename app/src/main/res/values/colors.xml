@@ -60,6 +60,14 @@
         <item>@color/color3</item>
         <item>@color/color4</item>
 
+
+
     </array>
+
+    <color name = "Submitted">#1B5E20</color>
+    <color name = "Assigned">#FFFF8800</color>
+    <color name = "Delivered">#FFFFBB33</color>
+    <color name = "Complelted">#FF33B5E5</color>
+    <color name = "Finished">#FF9933CC</color>
 
 </resources>

@@ -27,7 +27,7 @@ public class MyJobReqAdapter extends RecyclerView.Adapter<MyJobReqHolder> {
     private Context mContext;
     private ItemClickListner itemClickListner;
     private OrderHistoryListActivity orderHistoryListActivity = new OrderHistoryListActivity();
-    private String amount;
+    private String amount,status;
 
 
 
@@ -52,7 +52,28 @@ public class MyJobReqAdapter extends RecyclerView.Adapter<MyJobReqHolder> {
     public void onBindViewHolder(@NonNull MyJobReqHolder holder, int position) {
         holder.order_item_id.setText(myJobRequestList.get(position).getServiceId());
         holder.order_item_date.setText(myJobRequestList.get(position).getExpectedDate());
-        holder.order_item_status.setText(myJobRequestList.get(position).getRequestStatus());
+        status = myJobRequestList.get(position).getRequestStatus();
+        if(status == null || status.length() < 5){
+            status = "Submitted";
+            holder.order_item_status.setBackgroundColor(mContext.getResources().getColor(R.color.Submitted));
+        }
+        else if(status.equals("Assigned")){
+            holder.order_item_status.setBackgroundColor(mContext.getResources().getColor(R.color.Assigned));
+        }
+        else if(status.equals("Delivered")){
+            holder.order_item_status.setBackgroundColor(mContext.getResources().getColor(R.color.Delivered));
+        }
+        else if(status.equals("Completed")){
+            holder.order_item_status.setBackgroundColor(mContext.getResources().getColor(R.color.Complelted));
+        }
+        else if(status.equals("Finished")){
+            holder.order_item_status.setBackgroundColor(mContext.getResources().getColor(R.color.Finished));
+        }
+        else {
+            holder.order_item_status.setBackgroundColor(mContext.getResources().getColor(R.color.color2));
+        }
+
+        holder.order_item_status.setText(status);
         holder.order_item_address.setText(myJobRequestList.get(position).getAddress());
         holder.order_item_service_name.setText(myJobRequestList.get(position).getServiceItem());
         if(myJobRequestList.get(position).getJobAmount() != null){

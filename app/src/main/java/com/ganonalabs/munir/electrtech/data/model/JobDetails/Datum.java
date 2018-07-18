@@ -49,6 +49,15 @@ public class Datum {
     @SerializedName("requestStatus")
     @Expose
     private RequestStatus requestStatus;
+    @SerializedName("photo")
+    @Expose
+    private String photo;
+    @SerializedName("billing")
+    @Expose
+    private Object billing;
+    @SerializedName("totalAmount")
+    @Expose
+    private Object totalAmount;
 
     /**
      * No args constructor for use in serialization
@@ -75,7 +84,7 @@ public class Datum {
      * @param group
      * @param clientEmail
      */
-    public Datum(String id, String clientName, String clientPhone, String clientEmail, String serviceItem, String serviceId, String serviceItemId, String problemDescription, String expectedDate, Object employeesName, Object group, String expectedTime, Object employeesPhone, String technicalInput, RequestStatus requestStatus) {
+    public Datum(String id, String clientName, String clientPhone, String clientEmail, String serviceItem, String serviceId, String serviceItemId, String problemDescription, String expectedDate, Object employeesName, Object group, String expectedTime, Object employeesPhone, String technicalInput, RequestStatus requestStatus, String photo, Object billing, Object totalAmount) {
         super();
         this.id = id;
         this.clientName = clientName;
@@ -92,6 +101,9 @@ public class Datum {
         this.employeesPhone = employeesPhone;
         this.technicalInput = technicalInput;
         this.requestStatus = requestStatus;
+        this.photo = photo;
+        this.billing = billing;
+        this.totalAmount = totalAmount;
     }
 
     public String getId() {
@@ -214,4 +226,27 @@ public class Datum {
         this.requestStatus = requestStatus;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public Object getBilling() {
+        return billing;
+    }
+
+    public void setBilling(Object billing) {
+        this.billing = billing;
+    }
+
+    public Object getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Object totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 }

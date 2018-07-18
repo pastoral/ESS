@@ -1,21 +1,28 @@
 package com.ganonalabs.munir.electrtech.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ganonalabs.munir.electrtech.LoginActivity;
 import com.ganonalabs.munir.electrtech.R;
 import com.ganonalabs.munir.electrtech.adapters.MyJobReqAdapter;
+import com.ganonalabs.munir.electrtech.adapters.TimeLineViewAdapter;
 import com.ganonalabs.munir.electrtech.data.model.JobDetails.Datum;
 import com.ganonalabs.munir.electrtech.data.model.JobDetails.Datum_;
 import com.ganonalabs.munir.electrtech.data.model.JobDetails.JobDetails;
@@ -23,6 +30,8 @@ import com.ganonalabs.munir.electrtech.data.model.JobRequests.MyJobRequest;
 import com.ganonalabs.munir.electrtech.data.model.JobRequests.MyJobRequestList;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 
@@ -38,8 +47,9 @@ import retrofit2.Callback;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
-    private String orderid,imageurl,date,amount,name;
-    private TextView orderdatetime,txtorderid,ordername,txtbills,service_man_name;
+    private String orderid,imageurl,date,amount,name, servicemanname, servicemanimage, servicemanphone, billdetails, uid;
+    private TextView orderdatetime,txtorderid,ordername,txtbills,service_man_name,txtbilldetails;
+   // private EditText txtbilldetails;
     private ImageView service_man_image,service_man_phone, order_image;
     //private List<StepBean> status = new ArrayList<>();
     private Intent intent;
@@ -47,6 +57,13 @@ public class OrderDetailActivity extends AppCompatActivity {
     private TokenDataApiService tokenDataAPIService = TokenDataApiUtils.getUserDataAPIServices();
     private List<Datum> data = new ArrayList<Datum>();
     private ProgressBar jobDetailProgressBar;
+    private boolean mWithLinePadding;
+    private RecyclerView timelineRecyclerView;
+    private TimeLineViewAdapter mTimeLineAdapter;
+    private List<Datum_> mDataList = new ArrayList<>();
+    private Context mContext;
+    private FirebaseUser user;
+
 
 
     List<String> list= new ArrayList<>();
@@ -61,10 +78,12 @@ public class OrderDetailActivity extends AppCompatActivity {
         intent = getIntent();
         bundle = intent.getExtras();
 
+        mContext = OrderDetailActivity.this;
+
         orderid = intent.getStringExtra("SERVICEID");
         imageurl = intent.getStringExtra("SERVICEIMAGE");
         date = intent.getStringExtra("SERVICEDATE");
-        amount = intent.getStringExtra("SERVICEAMOUNT");
+        amount = "Total: "+intent.getStringExtra("SERVICEAMOUNT") + " BDT";
         name = intent.getStringExtra("SERVICENAME");
 
         orderdatetime = findViewById(R.id.orderdatetime);
@@ -76,6 +95,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         jobDetailProgressBar = findViewById(R.id.jobDetailProgressBar);
         order_image = findViewById(R.id.order_image);
         orderdatetime = findViewById(R.id.orderdatetime);
+        timelineRecyclerView = findViewById(R.id.timelineRecyclerView);
+        txtbilldetails = findViewById(R.id.txtbilldetails);
 
 //        list.add("Service posted");
 //        list.add("Service accepted");
@@ -101,7 +122,23 @@ public class OrderDetailActivity extends AppCompatActivity {
        // step_view.setSteps(status);
         jobDetailProgressBar.setVisibility(View.VISIBLE);
 
+
+        timelineRecyclerView.setLayoutManager(getLinearLayoutManager());
+        timelineRecyclerView.setHasFixedSize(true);
+
         getMyJobRequestInfo();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            uid = user.getUid();
+        }
     }
 
     @Override
@@ -140,11 +177,34 @@ public class OrderDetailActivity extends AppCompatActivity {
                     data = rawResponse.body().getData();
                     Log.d("ESS_JOB_DETAIL ", data.toString());
                     if(data.size()>0){
+
+                      //  mTimeLineAdapter = new TimeLineViewAdapter(data,mContext);
+                        for(int i = 0; i<data.size(); i++){
+                            for(int j = i; j < data.get(i).getRequestStatus().getData().size(); j++){
+
+                                mDataList.add(data.get(i).getRequestStatus().getData().get(j));
+                            }
+                            servicemanname = data.get(i).getEmployeesName().toString();
+                            servicemanimage = data.get(i).getPhoto();
+                            servicemanphone = data.get(i).getEmployeesPhone().toString();
+                            billdetails = data.get(i).getBilling().toString();
+
+                            String x = data.get(i).getTotalAmount().toString();
+                        }
+
+                        Picasso.with(mContext).load(servicemanimage).into(service_man_image);
+                        service_man_name.setText(servicemanname);
+                        txtbilldetails.setText(billdetails);
+
+
+
+                        mTimeLineAdapter = new TimeLineViewAdapter(mDataList,mContext);
+                        mTimeLineAdapter.notifyDataSetChanged();
+                       timelineRecyclerView.setAdapter(mTimeLineAdapter);
+
                         jobDetailProgressBar.setVisibility(View.GONE);
-
-
-
                     }
+
 
 
 //                    brandName.add("Select Model");
@@ -159,6 +219,12 @@ public class OrderDetailActivity extends AppCompatActivity {
                 }
                 catch (Exception e)
                 {
+                    service_man_image.setVisibility(View.GONE);
+                    service_man_name.setVisibility(View.GONE);
+                    txtbilldetails.setVisibility(View.GONE);
+                    timelineRecyclerView.setVisibility(View.GONE);
+                    jobDetailProgressBar.setVisibility(View.GONE);
+                    txtbills.setVisibility(View.GONE);
                     e.printStackTrace();
                 }
             }
@@ -169,5 +235,34 @@ public class OrderDetailActivity extends AppCompatActivity {
                 // other stuff...
             }
         });
+    }
+
+
+    private LinearLayoutManager getLinearLayoutManager() {
+
+            return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+    }
+
+//    private void initView() {
+//        setDataListItems();
+//        mTimeLineAdapter = new TimeLineAdapter(mDataList, mOrientation, mWithLinePadding);
+//        mRecyclerView.setAdapter(mTimeLineAdapter);
+//    }
+
+    public void dialServiceman(View view){
+        if(servicemanphone != null) {
+            Uri number = Uri.parse("tel:" + servicemanphone);
+            Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+            getApplicationContext().startActivity(callIntent);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(this, OrderHistoryListActivity.class);
+        i.putExtra("uid",user.getUid());
+        startActivity(i);
     }
 }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 
+import com.ganonalabs.munir.electrtech.LoginActivity;
 import com.ganonalabs.munir.electrtech.R;
 import com.ganonalabs.munir.electrtech.adapters.MyJobReqAdapter;
 import com.ganonalabs.munir.electrtech.data.model.Brands;
@@ -23,6 +24,9 @@ import com.ganonalabs.munir.electrtech.data.model.JobRequests.MyJobRequest;
 import com.ganonalabs.munir.electrtech.data.model.JobRequests.MyJobRequestList;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiService;
 import com.ganonalabs.munir.electrtech.data.remote.TokenDataApiUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 import org.json.JSONObject;
 
@@ -45,6 +49,8 @@ public class OrderHistoryListActivity extends AppCompatActivity {
     private ProgressBar jobListProgressBar;
     private LinearLayoutManager lm;
     private Context mContext;
+    //private FirebaseRemoteConfig mFirebaseRemoteConfig;
+
 
 
 
@@ -73,6 +79,8 @@ public class OrderHistoryListActivity extends AppCompatActivity {
 
 
     }
+
+
 
     @Override
     protected void onResume() {

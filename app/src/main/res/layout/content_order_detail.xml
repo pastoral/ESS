@@ -96,8 +96,8 @@
 
                     <ImageView
                         android:id="@+id/order_image"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:gravity="left"
                         android:padding="@dimen/order_details_spacing"
@@ -122,6 +122,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#dad8d8"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Request status"
+                        android:textColor="#a2a1b8"
+                        android:maxLength="30"
+                        android:background="#0000"
+                        android:gravity="left"
+                        android:textSize="10sp"
+                        android:padding="1dp"
+                        />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -131,15 +148,14 @@
                     android:orientation="vertical"
                     >
 
-                    <com.github.vipulasri.timelineview.TimelineView
-                        android:id="@+id/time_marker"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        app:markerSize="20dp"
-                        app:lineSize="2dp"
-                        app:line="@color/colorPrimary"
-                        app:marker="@drawable/marker"
-                        app:linePadding="2dp"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/timelineRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="1dp"
+                        android:clipToPadding="false"
+                        tools:listitem="@layout/item_timeline"/>
 
 
                 </LinearLayout>
@@ -174,27 +190,27 @@
 
                     <ImageView
                         android:id="@+id/service_man_image"
-                        android:layout_width="85dp"
-                        android:layout_height="85dp"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:layout_weight="1"
                         android:gravity="left"
                         android:padding="@dimen/order_details_spacing"
                         android:src="@drawable/ic_person_black" />
+
                     <TextView
-                        android:layout_weight="1"
                         android:id="@+id/service_man_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="David Husk"
-                        android:gravity="center_vertical"
-                        android:textColor="#a2a1b8"
-                        android:maxLength="30"
-                        android:background="#0000"
+                        android:layout_height="38dp"
                         android:layout_gravity="center_vertical"
-                        android:textStyle="bold"
-                        android:textSize="13sp"
+                        android:layout_weight="1"
+                        android:background="#0000"
+                        android:gravity="center_vertical"
+                        android:maxLength="30"
                         android:padding="@dimen/job_form_spacing"
-                        />
+                        android:text="David Husk"
+                        android:textColor="#a2a1b8"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/service_man_phone"
@@ -203,6 +219,7 @@
                         android:layout_weight="1"
                         android:layout_gravity="center|right"
                         android:padding="@dimen/order_details_spacing"
+                        android:onClick="dialServiceman"
                         android:src="@drawable/ic_phone" />
                 </LinearLayout>
                 <View
@@ -219,7 +236,7 @@
                         android:layout_weight="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Details"
+                        android:text="Bills"
                         android:textColor="#a2a1b8"
                         android:maxLength="30"
                         android:background="#0000"
@@ -237,7 +254,7 @@
                         android:layout_weight="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Bill"
+                        android:text="Bill details"
                         android:textColor="#a2a1b8"
                         android:maxLength="30"
                         android:background="#0000"
@@ -245,20 +262,42 @@
                         android:textSize="@dimen/order_details_text_size"
                         android:padding="@dimen/order_details_spacing"
                         />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="6dp">
                     <TextView
                         android:layout_weight="1"
-                        android:id="@+id/txtbills"
+                        android:id="@+id/txtbilldetails"
                         android:text="1000 BDT"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#181737"
                         android:textColor="#181737"
-                        android:maxLength="30"
                         android:background="#0000"
                         android:gravity="left"
                         android:textSize="12sp"
                         android:padding="@dimen/order_details_spacing"
                         />
+
+                        <TextView
+
+                            android:id="@+id/txtbills"
+                            android:text="1000 BDT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="#181737"
+                            android:textColor="#181737"
+                            style="bold"
+                            android:layout_gravity="center"
+                            android:paddingLeft="12dp"
+                            android:inputType="textMultiLine"
+                            />
+
+
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"

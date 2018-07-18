@@ -50,10 +50,10 @@
                         android:id="@+id/order_item_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/green"
+                        android:background="@color/Submitted"
                         android:gravity="right|center_vertical"
                         android:padding="@dimen/order_item_spacing"
-                        android:text="DELIVERED"
+                        android:text="Submitted"
                         android:textSize="@dimen/text_size_job"
                         android:layout_alignParentEnd="true"
                         android:textColor="@color/white"/>
