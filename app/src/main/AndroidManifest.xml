@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:name=".MyESS"
@@ -71,6 +72,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ganonalabs.munir.electrtech.Main2Activity" />
         </activity>
+
+        <activity
+            android:name=".ui.NewsActivity"
+            android:label="@string/title_activity_news"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.OrderHistoryListActivity"
             android:label="@string/title_activity_order_history_list"
@@ -87,7 +93,10 @@
         <activity
             android:name=".ui.NewsListActivity"
             android:label="@string/title_activity_news_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true">
+
+        </activity>
     </application>
 
 </manifest>

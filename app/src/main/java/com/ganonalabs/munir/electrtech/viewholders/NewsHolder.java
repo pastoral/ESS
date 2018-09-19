@@ -8,18 +8,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ganonalabs.munir.electrtech.R;
+import com.ganonalabs.munir.electrtech.interfaces.ItemClickListner;
 
-public class NewsHolder extends RecyclerView.ViewHolder {
+public class NewsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     public TextView notification_title, notification_content, id_hiddenid;
     public ImageView icon_notification;
     public LayoutInflater layoutInflater;
     public Context context;
+    public ItemClickListner itemClickListner;
+
+    @Override
+    public void onClick(View v) {
+        itemClickListner.onClick(v,getAdapterPosition(),false);
+
+    }
+
+    public void setItemClickListner(ItemClickListner itemClickListner) {
+        this.itemClickListner = itemClickListner;
+    }
 
     public NewsHolder(View view){
         super(view);
-        notification_title = (TextView)view.findViewById(R.id.notification_title);
-        notification_content = (TextView)view.findViewById(R.id.notification_content);
-        icon_notification = (ImageView)view.findViewById(R.id.id_notificationicon);
-        id_hiddenid = (TextView)view.findViewById(R.id.id_hiddenid);
+        view.setOnClickListener(this);
+        notification_title = view.findViewById(R.id.notification_title);
+        notification_content = view.findViewById(R.id.notification_content);
+        icon_notification = view.findViewById(R.id.id_notificationicon);
+        id_hiddenid = view.findViewById(R.id.id_hiddenid);
     }
 }

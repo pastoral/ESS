@@ -55,12 +55,14 @@ import com.ganonalabs.munir.electrtech.model.News;
 import com.ganonalabs.munir.electrtech.model.Services;
 import com.ganonalabs.munir.electrtech.ui.JobPostingActivity;
 
+import com.ganonalabs.munir.electrtech.ui.NewsListActivity;
 import com.ganonalabs.munir.electrtech.ui.OrderHistoryListActivity;
 import com.ganonalabs.munir.electrtech.ui.SearchActivity;
 import com.ganonalabs.munir.electrtech.ui.UserProfileActivity;
 import com.ganonalabs.munir.electrtech.utils.RecyclerTouchListener;
 import com.ganonalabs.munir.electrtech.viewholders.OfferHolder;
 import com.ganonalabs.munir.electrtech.viewholders.ServicesHolder;
+import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -116,6 +118,9 @@ public class Main2Activity extends BaseActivity
     public List<String> imageURLList = new ArrayList<String>();
     //public SliderLayout sliderLayout ;
     public News news;
+    public String NEWSLISTACTIVITY = "no";
+    public Bundle bundle;
+    public static final  int REQUEST_INVITE = 1;
 
     private android.support.v4.view.ViewPager mViewPager;
 
@@ -310,6 +315,7 @@ public class Main2Activity extends BaseActivity
 
 
 
+
 //        mViewPager = (android.support.v4.view.ViewPager) findViewById(R.id.viewPager);
 //        mCardAdapter = new com.ganonalabs.munir.electrtech.slider.CardPagerAdapter();
 //        mCardAdapter.addCardItem(new com.ganonalabs.munir.electrtech.slider.CardItem(R.string.title_1, R.string.text_1));
@@ -438,6 +444,10 @@ public class Main2Activity extends BaseActivity
     protected void onResume() {
         super.onResume();
         //activateSlider();
+       bundle = getIntent().getExtras();
+       if(bundle != null) {
+           NEWSLISTACTIVITY = bundle.getString("NEWSLISTACTIVITY");
+       }
         if(user != null) {
             dbUserRef.orderByKey().equalTo(user.getUid()).limitToFirst(1).addValueEventListener(profileListener);
         }
@@ -505,7 +515,12 @@ public class Main2Activity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            finish();
+            if(NEWSLISTACTIVITY == "yes"){
+                finish();
+            }
+            else {
+                finish();
+            }
         }
     }
 
@@ -523,15 +538,31 @@ public class Main2Activity extends BaseActivity
             intent.putExtra("uid",user.getUid());
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
+            intent = new Intent(getApplicationContext(), NewsListActivity.class);
+            //intent.putExtra("uid",user.getUid());
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            String url = "https://ess-bd.com/";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
 
         } else if (id == R.id.nav_send) {
 
+            Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                    .setMessage(getString(R.string.invitation_message))
+                    .setDeepLink(Uri.parse(getString(R.string.invitation_deep_link)))
+                    .setCustomImage(Uri.parse(getString(R.string.invitation_custom_image)))
+                    .setCallToActionText(getString(R.string.invitation_cta))
+                    .build();
+
+            startActivityForResult(intent, REQUEST_INVITE);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -776,7 +807,7 @@ public class Main2Activity extends BaseActivity
     }
 
     public void loadWeb(View v){
-        String url = "http://ess-bd.com/";
+        String url = "https://ess-bd.com/";
          Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
@@ -784,7 +815,7 @@ public class Main2Activity extends BaseActivity
     }
 
     public void loadInstagram(View v){
-        Uri uri = Uri.parse("http://instagram.com/_u/symphony_mobile/");
+        Uri uri = Uri.parse("https://www.instagram.com/ess191080/");
         Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 
         likeIng.setPackage("com.instagram.android");
@@ -793,7 +824,7 @@ public class Main2Activity extends BaseActivity
             startActivity(likeIng);
         } catch (ActivityNotFoundException e) {
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://instagram.com/symphony_mobile/")));
+                    Uri.parse("https://www.instagram.com/ess191080/")));
         }
     }
 
@@ -815,6 +846,7 @@ public class Main2Activity extends BaseActivity
         Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
         getApplicationContext().startActivity(callIntent);
     }
+
 
 
 }

@@ -3,6 +3,7 @@ package com.ganonalabs.munir.electrtech;
 import android.app.Application;
 import android.content.Context;
 
+import com.ganonalabs.munir.electrtech.onesignal.MyNotificationOpenedHandler;
 import com.onesignal.OneSignal;
 
 public class MyESS extends Application {
@@ -22,6 +23,7 @@ public class MyESS extends Application {
         context = getApplicationContext();
 
         OneSignal.startInit(this)
+                .setNotificationOpenedHandler(new MyNotificationOpenedHandler())
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();

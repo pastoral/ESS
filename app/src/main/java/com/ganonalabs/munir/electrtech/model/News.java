@@ -11,12 +11,13 @@ public class News implements Serializable {
     private String topCard;
     private int discount;
     private long revtimestamp;
+    private int news_id;
 
     public News(){
 
     }
 
-    public News(String description, String title, String imageURL, String rules, String topCard, int discount, long revtimestamp) {
+    public News(String description, String title, String imageURL, String rules, String topCard, int discount, long revtimestamp, int news_id) {
         this.description = description;
         this.title = title;
         this.imageURL = imageURL;
@@ -24,6 +25,7 @@ public class News implements Serializable {
         this.topCard = topCard;
         this.discount = discount;
         this.revtimestamp = revtimestamp;
+        this.news_id = news_id;
     }
 
     public String getDescription() {
@@ -80,5 +82,13 @@ public class News implements Serializable {
 
     public void setRevtimestamp(long revtimestamp) {
         this.revtimestamp = revtimestamp;
+    }
+
+    public int getNews_id() {
+        return news_id;
+    }
+
+    public void setNews_id(int news_id) {
+        this.news_id = news_id;
     }
 }

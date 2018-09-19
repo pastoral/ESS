@@ -1,11 +1,16 @@
 package com.ganonalabs.munir.electrtech.ui;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
@@ -238,13 +243,13 @@ public class JobFinalActivity extends BaseActivity {
                 try
                 {
                     //get your response....
-                  //  Log.d("NSIT", "JOB POST: " + rawResponse.body().toString());
+                    Log.d("NSIT", "JOB POST: " + rawResponse.body().toString());
                     String requestedurl = rawResponse.raw().request().url().toString();
                     Log.d("RQUESTED_URL", requestedurl);
                     if(rawResponse.isSuccessful()){
                         linlaHeaderProgress.setVisibility(View.GONE);
                         OrderID = rawResponse.body().getServiceId();
-
+                        Log.d("OrderID" , OrderID);
 
                     }
 
@@ -272,7 +277,7 @@ public class JobFinalActivity extends BaseActivity {
                 .title("Order posting")
                // .iconRes(R.drawable.ess_logo)
                 .content("Do you want to proceed?")
-                .backgroundColor(getResources().getColor(R.color.com_facebook_blue))
+                //.backgroundColor(getResources().getColor(R.color.com_facebook_blue))
                 .positiveText("Yes")
                 .negativeText("No")
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -281,6 +286,7 @@ public class JobFinalActivity extends BaseActivity {
                         postJob();
                         intent = new Intent(getApplicationContext(), Main2Activity.class);
                         showSnack(main2_coord , "Order ID "+ OrderID+ " has been posted");
+                        jobSubmitNotification();
                         startActivity(intent);
 
                     }
@@ -293,5 +299,35 @@ public class JobFinalActivity extends BaseActivity {
                 })
 
                 .show();
+    }
+
+
+    public void jobSubmitNotification(){
+        //Get an instance of NotificationManager//
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ess_logo)
+                        .setContentTitle("Job Confirmed")
+                        .setContentText("Your job has ben confirmed by ESS team")
+        .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND);
+
+
+        // Gets an instance of the NotificationManager service//
+
+        NotificationManager mNotificationManager =
+
+                (NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // When you issue multiple notifications about the same type of event,
+        // it’s best practice for your app to try to update an existing notification
+        // with this new information, rather than immediately creating a new notification.
+        // If you want to update this notification at a later date, you need to assign it an ID.
+        // You can then use this ID whenever you issue a subsequent notification.
+        // If the previous notification is still visible, the system will update this existing notification,
+        // rather than create a new one. In this example, the notification’s ID is 001//
+
+
+                mNotificationManager.notify(001, mBuilder.build());
     }
 }

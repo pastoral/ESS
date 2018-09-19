@@ -129,7 +129,7 @@
 
     <string name="hint_phone_number"><i>0171000000</i></string>
     <string name="title_activity_search">SearchActivity</string>
-    <string name="title_activity_news_list">NewsListActivity</string>
+    <string name="title_activity_news_list">Offers</string>
 
     <string name="title_1">Cool card</string>
     <string name="title_2">Ok card</string>
@@ -145,6 +145,12 @@
     <string name="instagram">Instagram</string>
     <string name="internet">Internet</string>
     <string name="invite">Invite</string>
+    <string name = "invitation_deep_link">https://ess.page.link/wMv3</string>
+    <string name="invitation_title">Efficient Service System</string>
+    <string name="invitation_message">Efficient Service System(ESS) is the best home appliances service provider. Give a try!</string>
+    <string name="invitation_custom_image">https://bit.ly/2PLb4iY</string>
+    <string name="invitation_cta">Install!</string>
+
 
     <string name="text_1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Etiam eget ligula eu lectus lobortis condimentum.</string>
 

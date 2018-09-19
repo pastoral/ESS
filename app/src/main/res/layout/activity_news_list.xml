@@ -31,7 +31,7 @@
                 android:id="@+id/image_header_news_list"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
-                android:src="@drawable/header_image_news_list"
+                android:src="@drawable/news_list_banner"
                 app:layout_collapseMode = "parallax"/>
 
             <android.support.v7.widget.Toolbar
